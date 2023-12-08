@@ -1,0 +1,85 @@
+// .background.powermenu {
+//     background: rgba($color: $background-base, $alpha: .9);
+
+.content {
+    background: $background-base;
+    padding: 3em 1em;
+    border-radius: $rounded-large;
+
+    .clock {
+        .time {
+
+            .hour,
+            .minutes,
+            .seconds,
+            .dot {
+                font-size: 6em;
+            }
+        }
+
+        .date {
+            font-size: 2em
+        }
+
+        .uptime {
+            font-size: 1.5em;
+        }
+    }
+
+    .button-bin {
+        margin: 2em 1em 0;
+
+        .button {
+
+            &:hover {
+                background: $background-inverse;
+                color: $text-accent;
+            }
+
+            border-radius: $rounded-large;
+            background: $background-muted;
+            min-width: 7.5em;
+            min-height: 7.5em;
+
+            .icon {
+                background-size: contain;
+                margin: 24px;
+
+                &.shutdown {
+                    background-image: url($icons+'shutdown.svg');
+                }
+
+                &.reboot {
+                    background-image: url($icons+'reboot.svg');
+                }
+
+                &.logout {
+                    background-image: url($icons+'logout.svg');
+                }
+
+                &.suspend {
+                    background-image: url($icons+'suspend.svg');
+                }
+
+                &.lock {
+                    background-image: url($icons+'lock.svg');
+                }
+            }
+        }
+
+        .label {
+            font-size: 1.25em;
+            margin: 0.5em 0;
+        }
+    }
+}
+
+.goodbye {
+    font-size: 5em;
+    padding-bottom: 1em;
+    font-family: "Poiret One";
+}
+
+.bg {
+    background: rgba($color: $background-base, $alpha: .6);
+}

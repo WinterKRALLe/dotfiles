@@ -1,0 +1,7 @@
+(defwidget _calendar []
+  (eventbox
+    :class "calendar"
+    :onhoverlost "eww update active=nic; scripts/toggle.sh calendar"
+    (calendar)
+  )
+)

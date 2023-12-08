@@ -1,0 +1,107 @@
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        TIME        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    panel_clock :interval "1s" `date +"%a %d %b    %H:%M"`)
+(defpoll    hour        :interval "1s" `date "+%H"`)
+(defpoll    minutes     :interval "1s" `date "+%M"`)
+(defpoll    seconds     :interval "1s" `date "+%S"`)
+(defpoll    date        :interval "1s" `date "+%b. %d. %A"`)
+(defpoll    uptime      :interval "1s" "uptime | awk '{print $3}' | tr ',' ' '")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;       BATTERY      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    BATstatus     :interval "5s"   `upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep state | cut -d ':' -f2 | xargs`)
+(defpoll    BATcapacity   :interval "60s"  `upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage | grep -o "[0-9]*"`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     WORKSPACES     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    workspaces      :interval   "1s"    `scripts/workspaces.sh`)
+(defvar     my-workspaces   "[1,2,3,4,5,6,7]")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;       NETWORK      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    strength    :interval   "60s"   `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print$1}'`)
+(defpoll    WiFistatus  :interval   ".5s"   `nmcli r wifi`)
+(defpoll    localIP     :interval   "5s"    `ip route | awk 'NR==1 { print $9 }'`)
+(defpoll currentNetInterface :interval "3s" `ip route get 1.1.1.1 | awk '{print $5}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        MUSIC       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    music       :interval   ".5s"   `playerctl metadata --format "{{artist}} - {{title}}"`)
+(defpoll    artist      :interval   ".5s"   `playerctl metadata artist`)
+(defpoll    duration    :interval   "1s"    `playerctl metadata --format "{{duration(mpris:length)}}"`)
+(defpoll    atPosition  :interval   "1s"    `playerctl metadata --format "{{duration(position)}}"`)
+; (defpoll atPositionP :interval ".5s" `scripts/music.sh`)
+(defpoll    playerStatus :interval  "1s"    `playerctl status`)
+
+(defpoll bitch :interval "2s" `scripts/music.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     MICROPHONE     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll mic :interval "1s" `pamixer --default-source --get-mute` )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        AUDIO       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll volume :interval "0.5s" `pamixer --get-volume` )
+(defpoll muted :interval "0.5s" `pamixer --get-mute` )
+(defpoll outputDevice :interval "3s" `pactl list sinks | awk '/Sink #/{sink=$2} /State:/{state=$2} /Active Port:/{port=$3} state=="RUNNING" && port ~ /headphones/ {found=1} END {if (found) {print "headphones"} else {print "speaker"}}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        USER        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll user :interval "1s" `whoami | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     BRIGHTNESS     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll brightness :interval "1s" `brightnessctl g`)
+(defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;      BLUETOOTH     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll bluetoothstatus :interval ".5s" `bluetoothctl show | grep "Powered" | awk '{print $2}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        ABOUT       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    whoami  :interval   "300s"  `echo $(whoami)@$(hostname)`)
+(defpoll    os      :interval   "300s"  `uname -a | awk '{ print $2 }'`)
+(defpoll    kernel  :interval   "300s"  `uname -r`)
+(defpoll    shell   :interval   "300s"  `echo $SHELL | awk -F '/' '{print $NF}'`)
+(defpoll    wm      :interval   "300s"  `echo $XDG_CURRENT_DESKTOP`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        SINKS       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll sinks :interval "1s" `scripts/sinks.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        COPYQ       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll q :interval "2s" `scripts/clipboard.sh`)
+
+
+(defvar open_tools false)
+(defvar system-menu false)
+
+(include "./yuck/widgets.yuck")
+(include "./yuck/windows.yuck")

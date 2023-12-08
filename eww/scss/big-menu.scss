@@ -1,0 +1,74 @@
+.big-menu {
+    border-radius: 16px;
+    background: $background-base;
+    margin: 0 1em;
+    padding: 1em 2em;
+
+
+    .bsinks {
+        font-size: .9em;
+
+    }
+
+    .clipboard {
+        padding: 0 .5em;
+
+        &:hover {
+            background: $background-b-highlight;
+            border-radius: $rounded-medium;
+        }
+    }
+
+    .dark {
+        color: $background-b-base;
+    }
+
+    .light {
+        color: $text-b-light;
+    }
+}
+
+
+.dot {
+    border-radius: $rounded-full;
+
+    &.left {
+        background: $background-b-highlight;
+    }
+
+    &.right {
+        background: $background-b-base;
+    }
+}
+
+
+
+
+.scales {
+
+    scale trough {
+        background-color: $background-b-base;
+        border-radius: 10px;
+        min-height: 9px;
+        min-width: 13em;
+
+        highlight {
+            min-height: 9px;
+            border-radius: 10px;
+            background: $background-b-highlight;
+        }
+    }
+
+    progressbar trough {
+        background-color: $background-b-base;
+        border-radius: 10px;
+        min-height: 9px;
+        min-width: 13em;
+
+        progress {
+            min-height: 9px;
+            border-radius: 10px;
+            background: $background-b-highlight;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+(defwindow about0
+  :monitor 0
+  :stacking "fg"
+  :geometry (geometry
+    :anchor "top left"
+  )
+  (box
+    :style "margin: .5em 0 0 .5em"
+    (about)
+  )
+)
+
+(defwindow about1
+  :monitor 1
+  :stacking "fg"
+  :geometry (geometry
+    :anchor "top left"
+  )
+  (box
+    :style "margin: .5em 0 0 .5em"
+    (about)
+  )
+)

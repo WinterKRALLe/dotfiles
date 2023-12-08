@@ -1,0 +1,21 @@
+(defwindow dashboard0
+  :monitor 0
+  :stacking "bg"
+  :geometry (geometry
+    ; :width "100%"
+    ; :height "100%"
+    :anchor "center"
+  )
+  (dashboard)
+)
+
+(defwindow dashboard1
+  :monitor 1
+  :stacking "bg"
+  :geometry (geometry
+    ; :width "100%"
+    ; :height "100%"
+    :anchor "center"
+  )
+  (dashboard)
+)

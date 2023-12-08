@@ -1,0 +1,21 @@
+(defwindow screenshot0
+  :monitor 0
+  :stacking "fg"
+  :focusable true
+  :geometry (geometry
+    :width "20%"
+    :height "70%"
+    :anchor "center center"
+  )
+  (screenshotmenu)
+)
+
+(defwindow screenshot1
+  :monitor 1
+  :stacking "fg"
+  :focusable true
+  :geometry (geometry
+    :anchor "center center"
+  )
+  (screenshotmenu)
+)

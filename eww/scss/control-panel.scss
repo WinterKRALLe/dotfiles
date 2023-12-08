@@ -1,0 +1,44 @@
+.tools {
+    padding: 1em;
+    background: $background;
+}
+
+.tool {
+    padding: 1em;
+    background: $color1;
+
+
+    .network {
+        color: #BB9AF7;
+    }
+
+    .volume {
+        color: #73DACA;
+    }
+
+    .microphone {
+        color: #F7768E;
+    }
+
+    .battery {
+        color: #7AA2F7;
+    }
+
+    &.buttons {
+        .button {
+            background: $color3;
+
+            &:hover {
+                background: $color2;
+            }
+
+            label {
+                padding: .5em 1em;
+            }
+        }
+    }
+}
+
+.volume {
+    font-size: 1.2em;
+}

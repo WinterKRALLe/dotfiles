@@ -1,0 +1,128 @@
+(defwidget _toolbutton [action label]
+  (eventbox
+    :class "button"
+    :cursor "pointer"
+    
+    (button
+      :timeout 30000
+      :onclick action
+      (label :text label)
+    )
+  )
+)
+
+(defwidget _tools []
+  (revealer
+    :transition "slideright"
+    :reveal open_tools
+    (box
+      :style "margin-left: 2em"
+      (eventbox
+        :onhoverlost "scripts/newtoggle.sh tools &"
+        (box
+          :class "tools"
+          :orientation "v"
+          :space-evenly false
+          :spacing 15
+          (box
+            :class "tool"
+            (literal
+              :content bitch
+            )
+          )
+          (box
+            :class "tool"
+            (literal
+              :content q
+            )
+          )
+          (box
+            :class "tool buttons"
+            :spacing 10
+            :orientation "v"
+            
+            (box
+              :spacing 10
+              
+              (eventbox
+                :class "button"
+                :cursor "pointer"
+                
+                (button
+                  :timeout 30000
+                  :onclick "hyprpicker -n -a"
+                  (label :text " Eyedropper")
+                )
+              )
+              (eventbox
+                :class "button"
+                :cursor "pointer"
+                
+                (button
+                  :timeout 30000
+                  :onclick "eww update open_tools=false && wezterm start -e htop"
+                  (label :text " Htop")
+                )
+              )
+              (_toolbutton
+                :action "eww update open_tools=false && hyprshot -m region --clipboard-only"
+                :label "󱣴 Clipboard"
+              )
+            )
+            (box
+              :spacing 10
+              
+              (_toolbutton
+                :action "eww update open_tools=false && hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                :label "󱣴 Region"
+              )
+              (_toolbutton
+                :action "eww update open_tools=false && hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                :label " Screen"
+              )
+              (_toolbutton
+                :action "eww update open_tools=false && hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                :label " Window"
+              )
+            )
+          )
+          (box
+            :class "tool buttons"
+            :spacing 10
+            
+            (_toolbutton
+              :action "gtklock &"
+              :label " Lock"
+            )
+            (_toolbutton
+              :action "eww update open_tools=false && systemctl suspend"
+              :label " Sleep"
+            )
+            (_toolbutton
+              :action "hyprctl dispatch exit"
+              :label "󰿅 Log Out"
+            )
+          )
+          (box
+            :class "tool"
+            (box
+              :space-evenly false
+              :spacing 15
+              :halign "center"
+              (box
+                :space-evenly false
+                (label :class "hour" :text hour)
+                (label :class "dot" :text ":")
+                (label :class "minutes" :text minutes)
+                (label :class "dot" :text ":")
+                (label :class "seconds" :text seconds)
+              )
+              (label  :class "date" :text date)
+              (label  :class "uptime" :text "Up: ${uptime}")
+            )
+          )
+        )
+      )
+    )
+  )
+)

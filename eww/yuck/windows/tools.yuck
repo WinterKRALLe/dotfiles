@@ -1,0 +1,6 @@
+(defwindow tools
+  :monitor 1
+  :stacking "fg"
+  :geometry (geometry :width "2px" :height "2px" :anchor "top left" :y "1%")
+  (_tools)
+)

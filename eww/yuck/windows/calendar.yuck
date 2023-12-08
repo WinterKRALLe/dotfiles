@@ -1,0 +1,21 @@
+(defwindow calendar0
+  :monitor 0
+  :stacking "fg"
+  :geometry (geometry
+  :anchor "top right")
+  (box
+    :style "margin-right: .75em"
+    (_calendar)
+  )
+)
+
+(defwindow calendar1
+  :monitor 1
+  :stacking "fg"
+  :geometry (geometry
+  :anchor "top right")
+  (box
+    :style "margin-right: .75em"
+    (_calendar)
+  )
+)

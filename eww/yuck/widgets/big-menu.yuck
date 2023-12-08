@@ -1,0 +1,418 @@
+(defwidget sysusage [data css icon]
+  (box
+    :space-evenly false
+    :spacing 15
+    :class "ffff"
+    (box
+      :class ""
+      (label
+        :class "text-light"
+        :text "${icon}"
+      )
+    )
+    (box
+      :valign "center"
+      :class "scales"
+      (progress
+        :value data
+        :tooltip "${data} ${ icon == '󰈸' ? '˚C' : '%'}"
+      )
+    )
+    (label
+      :class "text-light"
+      :text "${data} ${ icon == '󰈸' ? '˚C' : '%'}"
+    )
+  )
+)
+
+
+(defwidget fsysslider_volume []
+  (box
+    :space-evenly false
+    :spacing 15
+    :class ""
+    (eventbox
+      :cursor "pointer"
+      :onclick "pamixer -t"
+      (box
+        (label
+          :class "text-light"
+          :text {
+          outputDevice == "headphones" ? "󰋋" :
+          muted == "true" ? "󰝟" :
+          volume < 35 ? "󰕿" :
+          volume < 70 ? "󰖀" :
+          "󰕾"
+        })
+      )
+    )
+    (eventbox
+      :cursor "pointer"
+      :class "scales"
+      (scale
+        :min 0
+        :value volume
+        :max 101
+        :onchange "pamixer --set-volume {}"
+        :tooltip "${volume}%"
+      )
+    )
+    (label
+      :class "text-light"
+      :text "${volume}%"
+    )
+  )
+)
+(defwidget fsysslider_brightness []
+  (box
+    :space-evenly false
+    :spacing 15
+    :class ""
+    (box
+      (label
+        :class "text-light"
+        :text {
+        brightness < 124 ? "󱩎" :
+        brightness < 250 ? "󱩒" : "󰛨"
+      })
+    )
+    (eventbox
+      :cursor "pointer"
+      :class "scales"
+      (scale
+        :min 1
+        :value brightness
+        :max 256
+        :onchange "brightnessctl s {}"
+        :tooltip "${brightnessP}"
+      )
+    )
+    (label
+      :class "text-light"
+      :text "${brightnessP}"
+    )
+  )
+)
+
+(defwidget dot [class]
+  (box
+    :width 10
+    :height 10
+    :class "dot ${class}"
+  )
+)
+
+(defwidget big-menu []
+  (eventbox
+    :onhoverlost "scripts/toggle.sh big-menu"
+    
+    (box
+      :class "big-menu"
+      :spacing 20
+      
+      (box
+        :spacing 20
+        
+        (box
+          :space-evenly false
+          :spacing 20
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "left"
+              )
+            )
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            :spacing 10
+            :hexpand true
+            
+            (label
+              :class "text-light"
+              :text music
+              :wrap true
+            )
+            (label
+              :class "dark"
+              :text "${atPosition} / ${duration}"
+              :xalign 0.5
+            )
+            (box
+              :class "buttons"
+              :space-evenly false
+              :spacing 15
+              :halign "center"
+              (eventbox
+                :cursor "pointer"
+                :onclick "playerctl previous"
+                :class "music-btn"
+                (label
+                  :class "text-light"
+                :text "")
+              )
+              (eventbox
+                :cursor "pointer"
+                :onclick "playerctl play-pause"
+                :class "music-btn"
+                (label
+                  :class "text-light"
+                  :text {
+                  playerStatus == "Playing" ? "󰏦" : "󰐍"
+                })
+              )
+              (eventbox
+                :cursor "pointer"
+                :onclick "playerctl next"
+                :class "music-btn"
+                (label
+                  :class "text-light"
+                :text "")
+              )
+            )
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "right"
+              )
+            )
+          )
+        )
+        (box
+          :space-evenly false
+          :spacing 20
+          
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "left"
+              )
+            )
+          )
+          (literal
+            :hexpand true
+            :content q
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "right"
+              )
+            )
+          )
+        )
+      )
+      (box
+        :space-evenly false
+        :spacing 20
+        
+        (box
+          :orientation "v"
+          :space-evenly false
+          (box
+            :valign "start"
+            (dot
+              :class "left"
+            )
+          )
+        )
+        (box
+          :hexpand true
+          :orientation "v"
+          (fsysslider_volume)
+          (sysusage
+            :css "cpu"
+            :data "${round(EWW_CPU.avg,0)}"
+            :icon ""
+          )
+          (sysusage
+            :css "temppp"
+            :data {EWW_TEMPS["ACPITZ_TEMP1"]}
+            :icon "󰈸"
+          )
+        )
+        (box
+          :hexpand true
+          :orientation "v"
+          (fsysslider_brightness)
+          (sysusage
+            :css "ram"
+            :data "${round(EWW_RAM.used_mem / EWW_RAM.total_mem * 100,0)}"
+            :icon ""
+          )
+          (sysusage
+            :css "batt"
+            :data BATcapacity
+            :icon {EWW_BATTERY.BAT1.status == "Charging" ? "󰂄" : "󰁹"}
+          )
+        )
+        (box
+          :orientation "v"
+          :space-evenly false
+          (box
+            :valign "start"
+            (dot
+              :class "right"
+            )
+          )
+        )
+      )
+      (box
+        :spacing 20
+        
+        (box
+          :space-evenly false
+          :spacing 20
+          
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "left"
+              )
+            )
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "right"
+              )
+            )
+          )
+        )
+        (box
+          :space-evenly false
+          :spacing 20
+          
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "left"
+              )
+            )
+          )
+          (box
+            :orientation "v"
+            :hexpand true
+            :spacing 20
+            
+            (box
+              :space-evenly false
+              :spacing 15
+              (label
+                :class "text-light"
+                :text "󰀂"
+              )
+              (label
+                :class "text-light"
+                :text localIP
+              )
+            )
+            (box
+              :space-evenly false
+              :spacing 15
+              :valign "center"
+              
+              (label
+                :class "dark"
+                :text "󰞙"
+                :style "font-size: 1.4em"
+              )
+              (box
+                :valign "center"
+                :class "scales"
+                :orientation "v"
+                :space-evenly false
+                :spacing 5
+                
+                ; THIS IS UP TO 50 Mbps
+                (progress
+                  :value {currentNetInterface == "enp3s0f3u2u3" ?
+                  "${round((EWW_NET.enp3s0f3u2u3.NET_UP / 2 * 8 / 1024 / 512),3)}" :
+                  "${round((EWW_NET.wlp2s0.NET_UP / 2 * 8 / 1024 / 512),3)}"
+                  }
+                )
+                (label
+                  :class "text-light"
+                  :xalign 1
+                  :style "margin-right: .5em"
+                  :text { currentNetInterface == "enp3s0f3u2u3" ?
+                  "${round((EWW_NET.enp3s0f3u2u3.NET_UP / 2 * 8 / 1024),3)}  kbps" :
+                  "${round((EWW_NET.wlp2s0.NET_UP / 2 * 8 / 1024),3)}  kbps"
+                  }
+                )
+              )
+            )
+            (box
+              :space-evenly false
+              :spacing 15
+              :valign "center"
+              
+              (label
+                :class "dark"
+                :text "󰞒"
+                :style "font-size: 1.4em"
+              )
+              (box
+                :valign "center"
+                :class "scales"
+                :orientation "v"
+                :space-evenly false
+                :spacing 5
+                
+                ; THIS IS UP TO 100 Mbps
+                (progress
+                  :value {currentNetInterface == "enp3s0f3u2u3" ?
+                  "${round((EWW_NET.enp3s0f3u2u3.NET_DOWN / 2 * 8 / 1024 / 1024),3)}" :
+                  "${round((EWW_NET.wlp2s0.NET_DOWN / 2 * 8 / 1024 / 1024),3)}"
+                  }
+                )
+                (label
+                  :class "text-light"
+                  :style "margin-right: .5em"
+                  :xalign 1
+                  :text { currentNetInterface == "enp3s0f3u2u3" ?
+                  "${round((EWW_NET.enp3s0f3u2u3.NET_DOWN / 2 * 8 / 1024),3)}  kbps" :
+                  "${round((EWW_NET.wlp2s0.NET_DOWN / 2 * 8 / 1024),3)}  kbps"
+                  }
+                )
+              )
+            )
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            (box
+              :valign "start"
+              (dot
+                :class "right"
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)

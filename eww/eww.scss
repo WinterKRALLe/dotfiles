@@ -1,0 +1,49 @@
+$icons: "/home/winter/.config/eww/icons/";
+
+$background-accent-p: #e53265;
+$background-accent: #1793D1;
+$text-accent: #2fd6b5;
+// $background-base: #16141c;
+$background-base: #000;
+$background-muted: #1a1926;
+$background-inverse: #252635;
+$text-base: #ffffff;
+$text-muted: #ededee;
+$text-inverse: #979bb0;
+
+$background-b-base: #5F308A;
+$background-b-highlight: #9381CE;
+$text-b-light: #9792AC;
+
+$rounded-full: 9999px;
+$rounded-large: 24px;
+$rounded-medium: 8px;
+
+@import "../../.cache/wal/colors.scss";
+
+@import "./scss/powermenu.scss";
+@import "./scss/screenshot.scss";
+@import "./scss/system-menu.scss";
+@import "./scss/menu.scss";
+@import "./scss/bar.scss";
+@import "./scss/calendar.scss";
+@import "./scss/control-panel.scss";
+@import "./scss/music.scss";
+@import "./scss/app-launcher.scss";
+@import "./scss/about.scss";
+@import "./scss/dashboard.scss";
+@import "./scss/big-menu.scss";
+@import "./scss/clipboard.scss";
+
+
+* {
+    all: unset;
+    font-family: 'Ubuntu Nerd Font';
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: $rounded-large;
+    color: $foreground;
+    font-size: large;
+}

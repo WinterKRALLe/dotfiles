@@ -1,0 +1,192 @@
+(defwidget _menu []
+  (eventbox
+    :cursor "pointer"
+    :onclick "scripts/toggle.sh menu"
+    :class "menu"
+    (box
+      (image
+        :path "./icons/Hyprland.svg"
+        :image-height 24
+      )
+    )
+  )
+)
+
+(defwidget _workspaces []
+  (eventbox
+    :cursor "pointer"
+    :class "workspaces"
+    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box
+      :orientation "h"
+      :spacing 15
+      (for ws in my-workspaces
+        (button :onclick "hyprctl dispatch workspace ${ws}"
+          :width 30
+          :height 30
+          (label
+            :class {
+            workspaces[ws - 1] == 1 ? "active" :
+            workspaces[ws - 1] == 2 ? "used" :
+            ""
+            }
+            :text {
+            workspaces[ws - 1] == 1 ? "" :
+            workspaces[ws - 1] == 2 ? "" :
+            ""
+            }
+            :xalign 0.5
+            :yalign 0.5
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget _battery []
+  (box
+    :class "battery"
+    (label :text "${BATcapacity}% ")
+    (image :path {
+      BATstatus == "charging" ? "./icons/battery-charging-fill.svg" :
+      BATcapacity < 10 ? "./icons/battery-empty-fill.svg" :
+      BATcapacity < 31 ? "./icons/battery-low-fill.svg" :
+      BATcapacity < 60 ? "./icons/battery-medium-fill.svg" :
+      BATcapacity < 91 ? "./icons/battery-high-fill.svg" :
+      "./icons/battery-full-fill.svg"
+    } :image-height 24)
+  )
+)
+
+(defwidget _network []
+  (box
+    :class "network"
+    (label :text {
+      strength == "" ? "󰤭" :
+      strength < 26 ? "󰤟" :
+      strength < 51 ? "󰤢" :
+      strength < 76 ? "󰤥" :
+      "󰤨"}
+    )
+  )
+)
+
+(defwidget _microphone []
+  (box :class "microphone" :style "padding-left: 1em" :space-evenly false :orientation "h" :spacing 3
+    (button :onclick "pamixer --default-source -t"
+      (label :style "font-size: 1.4em" :text {mic == true ? "󰍭" :
+        "󰍬"
+        }
+      )
+    )
+  )
+)
+
+(defwidget _volume []
+  (box
+    :class "volume"
+    (label :text {
+      outputDevice == "headphones" ? "󰋋" :
+      muted == "true" ? "󰝟" :
+      volume < 35 ? "󰕿" :
+      volume < 70 ? "󰖀" :
+      "󰕾"
+    })
+  )
+)
+
+
+(defvar active "nic")
+(defwidget _datetime []
+  (eventbox
+    :class "datetime ${active}"
+    :onclick {active == "nic" ?
+    "eww update active=active; scripts/toggle.sh calendar" :
+    "eww update active=nic; scripts/toggle.sh calendar"}
+    :cursor "pointer"
+    (label
+      :text panel_clock
+    )
+  )
+)
+
+(defwidget bar []
+  (centerbox
+    :class "bar"
+    (box
+      :class "subbar"
+      :halign "start"
+      :space-evenly false
+      :spacing 30
+      
+      (_menu)
+      (eventbox
+        :cursor "pointer"
+        :onclick "scripts/newtoggle.sh tools"
+        (box
+          :space-evenly false
+          :spacing 30
+          
+          (label :text "󰎈" :style "font-size: 1.3em")
+          (label :text "󰨸" :style "font-size: 1.3em")
+          (label :text "")
+          (label :text "" :style "font-size: 1.1em")
+          (label :text "" :style "font-size: 1.2em")
+        )
+      )
+      (systray
+        :pack-direction "ltr"
+      )
+    )
+    (box
+      :class "subbar"
+      :halign "center"
+      (_workspaces)
+    )
+    (box
+      :class "subbar"
+      :halign "end"
+      :space-evenly false
+      :spacing 20
+      
+      (eventbox
+        :cursor "pointer"
+        ; :onclick {
+        ; open_system-menu == true ?
+        ; "scripts/toggle.sh system-menu && eww update open_system-menu=false" :
+        ; "scripts/toggle.sh system-menu && eww update open_system-menu=true"
+        ; }
+        
+        (box
+          :space-evenly false
+          :spacing 25
+          (label
+            :style "font-size: 1.2em"
+            :text {mic == true ? "󰍭" : "󰍬"}
+          )
+          (label
+            :style "font-size: 1.4em"
+            :text {
+            outputDevice == "headphones" ? "󰋋" :
+            muted == "true" ? "󰝟" :
+            volume < 35 ? "󰕿" :
+            volume < 70 ? "󰖀" :
+            "󰕾"
+          })
+          (label
+            :style "font-size: 1.1em"
+            :text {
+            strength == "" ? "󰤭" :
+            strength < 26 ? "󰤟" :
+            strength < 51 ? "󰤢" :
+            strength < 76 ? "󰤥" :
+            "󰤨"}
+          )
+          (_battery)
+        )
+      )
+      (_datetime)
+    )
+  )
+)

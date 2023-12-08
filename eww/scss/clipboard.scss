@@ -1,0 +1,9 @@
+.clipboard {
+    label {
+        padding: .5em;
+    }
+
+    &:hover {
+        background: $color2;
+    }
+}
