@@ -1,100 +1,97 @@
 #!/bin/bash
 
-function remove_leading_zeros() {
-    local value=$1
-    echo $((10#$value))
-}
-
 time_to_seconds() {
-    local time=$1
-    IFS=':' read -r minutes seconds <<< "$time"
-    echo $((minutes * 60 + seconds))
+  local time=$1
+  IFS=':' read -r minutes seconds <<<"$time"
+  echo $((minutes * 60 + seconds))
 }
-
-# function time_to_seconds() {
-#     local time_str=$1
-#     local hours=${time_str%%:*}
-#     time_str=${time_str#*:}
-#     local minutes=${time_str%%:*}
-#     local seconds=${time_str##*:}
-#     hours=$(remove_leading_zeros "$hours")
-#     minutes=$(remove_leading_zeros "$minutes")
-#     seconds=$(remove_leading_zeros "$seconds")
-#     echo $((hours * 3600 + minutes * 60 + seconds))
-# }
-
-duration=$(playerctl metadata --format "{{duration(mpris:length)}}")
-
-atPosition=$(playerctl metadata --format "{{duration(position)}}")
-
-song_duration_seconds=$(time_to_seconds $duration)
-
-current_position_seconds=$(time_to_seconds $atPosition)
-
-# percentage=0
-
-# if [[ $song_duration_seconds -ne 0 ]]; then
-#     percentage=$(( ($current_position_seconds * 100) / $song_duration_seconds ))
-# fi
 
 pp=$(playerctl --list-all)
-echo '(box
-      :class "music"
-      :orientation "h"
-      :space-evenly false
-      :halign "center"
-      :spacing 20'
 
-for i in $pp; do
-    music=$(playerctl --player=$i metadata --format "{{artist}} - {{title}}")
-    playerStatus=$(playerctl --player=$i status)
+if [[ -z "$pp" || "$pp" == "No players found" ]]; then
+  echo '(box
+          :halign "center"
+          (label :text "No players found")
+        )'
+else
 
-    isSpotify=false
-    if [[ $i == *"spotify"* ]]; then
-        isSpotify=true
-    fi
+  echo '(box
+          :orientation "v"
+          :valign "start"
+          :space-evenly false
+        '
 
-    echo '
-      (box
-        :orientation "v"
-        :style "min-width: 5em"
-        (label :text "'"$music"'")'
-if $isSpotify; then
-        echo '
-          (box
-            :class "progress"
-              (scale
-              :min 0
-              :value '$current_position_seconds'
-              :max '$song_duration_seconds'
-              :onchange "playerctl position {}"
-            )
-          )'
-    fi
+  for i in $pp; do
+    playerctl metadata -F -f '{{playerName}} {{title}} {{artist}} {{mpris:artUrl}} {{status}} {{mpris:length}}' | while read -r line; do
+      title=$(playerctl metadata -f "{{title}}")
+      artist=$(playerctl metadata -f "{{artist}}")
+      artUrl=$(playerctl metadata -f "{{mpris:artUrl}}")
+      status=$(playerctl metadata -f "{{status}}")
+      # length=$(playerctl metadata -f "{{mpris:length}}")
+      # if [[ $length != "" ]]; then
+      #   length=$(($length / 1000000))
+      #   length=$(echo "($length + 0.5) / 1" | bc)
+      # fi
+      # lengthStr=$(playerctl metadata -f "{{duration(mpris:length)}}")
+
+      echo '(box
+        :orientation "h"
+        :space-evenly false
+        :spacing 20
+        :class "player"
+        '
+
+      if [[ ! -z "$artUrl" ]]; then
         echo '(box
-          :class "buttons"
-          (eventbox
-            :cursor "pointer"
-            :onclick "playerctl --player='"$i"' previous"
-            :class "music-btn"
-            (label :text "󰙤")
+              :space-evenly false
+              :width 100
+              :height 100
+              :style "background-image: url(\"'$artUrl'\"); background-size: cover; background-repeat: no-repeat; background-position: center;"
+            )'
+      fi
+      echo '(box
+            :orientation "v"
+            :hexpand true
+            (label 
+            :limit-width 35
+            :text "'"$artist"'")
+            (label 
+            :limit-width 35
+            :text "'"$title"'")
+          (box
+            (eventbox
+              :cursor "pointer"
+              :onclick "playerctl --player='"$i"' previous"
+              (label
+                :style "font-size: 1.4em;"
+                :text "󰙤"
+              )
+            )
+            (eventbox
+              :cursor "pointer"
+              :onclick "playerctl --player='"$i"' play-pause"
+              :class "music-btn"
+              (label
+                :style "font-size: 1.4em;"
+                :text {
+                  "'"$status"'" == "Playing" ? "󰏦" : "󰐍"
+                }
+              )
+            )
+            (eventbox
+              :cursor "pointer"
+              :onclick "playerctl --player='"$i"' next"
+              :class "music-btn"
+              (label 
+                :style "font-size: 1.4em;"
+                :text "󰙢"
+              )
+            )
           )
-          (eventbox
-            :cursor "pointer"
-            :onclick "playerctl --player='"$i"' play-pause"
-            :class "music-btn"
-            (label :text {
-              "'"$playerStatus"'" == "Playing" ? "󰏦" : "󰐍"
-            })
-          )
-          (eventbox
-            :cursor "pointer"
-            :onclick "playerctl --player='"$i"' next"
-            :class "music-btn"
-            (label :text "󰙢")
-          )
-
-    
     ))'
-done
-echo ')'
+
+      echo ')'
+    done
+  done
+
+fi

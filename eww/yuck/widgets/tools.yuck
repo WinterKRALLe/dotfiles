@@ -16,109 +16,166 @@
     :transition "slideright"
     :reveal open_tools
     (box
-      :style "margin-left: 2em"
+      :style "margin-left: 1em"
       (eventbox
-        :onhoverlost "scripts/newtoggle.sh tools &"
         (box
           :class "tools"
           :orientation "v"
           :space-evenly false
           :spacing 15
+          
           (box
-            :class "tool"
-            (literal
-              :content bitch
-            )
-          )
-          (box
-            :class "tool"
-            (literal
-              :content q
-            )
-          )
-          (box
-            :class "tool buttons"
-            :spacing 10
+            :class "wrapper"
             :orientation "v"
+            :space-evenly false
+            :spacing 15
             
             (box
-              :spacing 10
-              
-              (eventbox
-                :class "button"
-                :cursor "pointer"
-                
-                (button
-                  :timeout 30000
-                  :onclick "hyprpicker -n -a"
-                  (label :text " Eyedropper")
-                )
-              )
-              (eventbox
-                :class "button"
-                :cursor "pointer"
-                
-                (button
-                  :timeout 30000
-                  :onclick "eww update open_tools=false && wezterm start -e htop"
-                  (label :text " Htop")
-                )
-              )
-              (_toolbutton
-                :action "eww update open_tools=false && hyprshot -m region --clipboard-only"
-                :label "󱣴 Clipboard"
-              )
-            )
-            (box
+              :class "tool-buttons"
               :spacing 10
               
               (_toolbutton
-                :action "eww update open_tools=false && hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
-                :label "󱣴 Region"
+                :action "scripts/newtoggle.sh tools && gtklock &"
+                :label " Lock"
               )
               (_toolbutton
-                :action "eww update open_tools=false && hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
-                :label " Screen"
+                :action "scripts/newtoggle.sh tools && systemctl suspend"
+                :label " Sleep"
               )
               (_toolbutton
-                :action "eww update open_tools=false && hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
-                :label " Window"
+                :action "hyprctl dispatch exit"
+                :label "󰿅 Log Out"
               )
             )
-          )
-          (box
-            :class "tool buttons"
-            :spacing 10
             
-            (_toolbutton
-              :action "gtklock &"
-              :label " Lock"
-            )
-            (_toolbutton
-              :action "eww update open_tools=false && systemctl suspend"
-              :label " Sleep"
-            )
-            (_toolbutton
-              :action "hyprctl dispatch exit"
-              :label "󰿅 Log Out"
-            )
-          )
-          (box
-            :class "tool"
+            
             (box
+              :orientation "v"
               :space-evenly false
               :spacing 15
-              :halign "center"
+              :class "tool-section"
+              
               (box
-                :space-evenly false
-                (label :class "hour" :text hour)
-                (label :class "dot" :text ":")
-                (label :class "minutes" :text minutes)
-                (label :class "dot" :text ":")
-                (label :class "seconds" :text seconds)
+                :class "tool"
+                :style "padding: 1em 1em 0"
+                
+                (literal
+                  :content q
+                )
               )
-              (label  :class "date" :text date)
-              (label  :class "uptime" :text "Up: ${uptime}")
+              (box
+                :class "tool tool-buttons"
+                :spacing 10
+                :orientation "v"
+                
+                (box
+                  :spacing 10
+                  
+                  (eventbox
+                    :class "button"
+                    :cursor "pointer"
+                    
+                    (button
+                      :timeout 30000
+                      :onclick "hyprpicker -n -a"
+                      (label :text " Eyedropper")
+                    )
+                  )
+                  (eventbox
+                    :class "button"
+                    :cursor "pointer"
+                    
+                    (button
+                      :timeout 30000
+                      :onclick "scripts/newtoggle.sh tools && wezterm start -e htop"
+                      (label :text " Htop")
+                    )
+                  )
+                  (_toolbutton
+                    :action "scripts/newtoggle.sh tools && hyprshot -m region --clipboard-only"
+                    :label "󱣴 Clipboard"
+                  )
+                )
+                (box
+                  :spacing 10
+                  
+                  (_toolbutton
+                    :action "scripts/newtoggle.sh tools && hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                    :label "󱣴 Region"
+                  )
+                  (_toolbutton
+                    :action "scripts/newtoggle.sh tools && hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                    :label " Screen"
+                  )
+                  (_toolbutton
+                    :action "scripts/newtoggle.sh tools && hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+                    :label " Window"
+                  )
+                )
+              )
+              
+              (box
+                :orientation "v"
+                :valign "start"
+                :space-evenly false
+                (for i in hej
+                  (box
+                    :orientation "h"
+                    :space-evenly false
+                    :spacing 20
+                    :class "player"
+                    (box
+                      :space-evenly false
+                      :width 100
+                      :height 100
+                      :style "
+                      background-image: url('${m[i - 1].artUrl}');
+                      background-size: cover; background-repeat:
+                      no-repeat; background-position: center;"
+                    )
+                    (box
+                      :orientation "v"
+                      :hexpand true
+                      (label
+                        :limit-width 35
+                      :text {m[i - 1].artist})
+                      (label
+                        :limit-width 35
+                      :text {m[i - 1].title})
+                      (box
+                        (eventbox
+                          :cursor "pointer"
+                          :onclick "playerctl --player=${m[i - 1].name} previous"
+                          (label
+                            :style "font-size: 1.4em;"
+                            :text "󰙤"
+                          )
+                        )
+                        (eventbox
+                          :cursor "pointer"
+                          :onclick "playerctl --player=${m[i - 1].name} play-pause"
+                          :class "music-btn"
+                          (label
+                            :style "font-size: 1.4em;"
+                            :text {
+                            m[i - 1].status == "Playing" ? "󰏦" : "󰐍"
+                            }
+                          )
+                        )
+                        (eventbox
+                          :cursor "pointer"
+                          :onclick "playerctl --player=${m[i - 1].name} next"
+                          :class "music-btn"
+                          (label
+                            :style "font-size: 1.4em;"
+                            :text "󰙢"
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
             )
           )
         )

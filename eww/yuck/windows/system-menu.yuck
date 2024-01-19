@@ -1,7 +1,7 @@
 (defwindow system-menu0
   :monitor 0
   :stacking "fg"
-  :geometry (geometry :width "2px" :height "2px" :anchor "top left" :y "1%")
+  :geometry (geometry :width "2px" :height "2px" :anchor "top right" :y "1%")
   (_system-menu)
 )
 

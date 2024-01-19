@@ -16,7 +16,7 @@
       :hexpand true
       (scale
         :min 0
-        :value volume
+        :value {volume.level}
         :max 101
         :onchange "pamixer --set-volume {}"
       )
@@ -24,7 +24,7 @@
     (label
       :class "val"
       :xalign 1
-      :text "${volume}%"
+      :text "${volume.level}%"
     )
   )
 )
@@ -113,9 +113,9 @@
 (defwidget _system-menu []
   (revealer
     :transition "slideleft"
-    :reveal system-menu
+    :reveal open_system-menu
     (eventbox
-      :onhoverlost "eww update open_system-menu=false && sleep 1 && scripts/toggle.sh system-menu"
+      :onhoverlost "scripts/newtoggle.sh system-menu &"
       :class "event-sys"
       (box
         :class "system"

@@ -19,7 +19,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     WORKSPACES     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll    workspaces      :interval   "1s"    `scripts/workspaces.sh`)
+(deflisten    workspaces    `scripts/workspaces.sh`)
 (defvar     my-workspaces   "[1,2,3,4,5,6,7]")
 
 
@@ -27,7 +27,7 @@
 ;;       NETWORK      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defpoll    strength    :interval   "60s"   `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print$1}'`)
-(defpoll    WiFistatus  :interval   ".5s"   `nmcli r wifi`)
+(defpoll    WiFistatus  :interval   "5s"   `nmcli r wifi`)
 (defpoll    localIP     :interval   "5s"    `ip route | awk 'NR==1 { print $9 }'`)
 (defpoll currentNetInterface :interval "3s" `ip route get 1.1.1.1 | awk '{print $5}'`)
 
@@ -35,15 +35,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        MUSIC       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll    music       :interval   ".5s"   `playerctl metadata --format "{{artist}} - {{title}}"`)
-(defpoll    artist      :interval   ".5s"   `playerctl metadata artist`)
-(defpoll    duration    :interval   "1s"    `playerctl metadata --format "{{duration(mpris:length)}}"`)
-(defpoll    atPosition  :interval   "1s"    `playerctl metadata --format "{{duration(position)}}"`)
-; (defpoll atPositionP :interval ".5s" `scripts/music.sh`)
-(defpoll    playerStatus :interval  "1s"    `playerctl status`)
+; (defpoll m :interval "2s" `scripts/music.sh`)
+(deflisten m :initial "(label :text 'No players found')" `scripts/mpris.sh`)
 
-(defpoll bitch :interval "2s" `scripts/music.sh`)
 
+(defvar hej "[1,2]")
+(defvar ff `
+  [{
+  "name": "firefox.instance_1_594",
+  "title": "Black Rebel Motorcycle Club - Howl - EXTENDED VERSION",
+  "artist": "paradisefails",
+  "artUrl": "file:///home/winter/.mozilla/firefox/firefox-mpris/598746_25.png",
+  "status": "Paused",
+  "length": ""
+  },{
+  "name": "spotify",
+  "title": "All My Life",
+  "artist": "Attack Attack!",
+  "artUrl": "https://i.scdn.co/image/ab67616d0000b27330f9b2da21d1575086b12418",
+  "status": "Playing",
+  "length": ""
+  }]
+`)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     MICROPHONE     ;;
@@ -54,9 +67,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        AUDIO       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll volume :interval "0.5s" `pamixer --get-volume` )
-(defpoll muted :interval "0.5s" `pamixer --get-mute` )
-(defpoll outputDevice :interval "3s" `pactl list sinks | awk '/Sink #/{sink=$2} /State:/{state=$2} /Active Port:/{port=$3} state=="RUNNING" && port ~ /headphones/ {found=1} END {if (found) {print "headphones"} else {print "speaker"}}'`)
+(deflisten  volume   :initial "0"   `scripts/volume.sh`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -101,7 +112,7 @@
 
 
 (defvar open_tools false)
-(defvar system-menu false)
+(defvar open_system-menu false)
 
 (include "./yuck/widgets.yuck")
 (include "./yuck/windows.yuck")

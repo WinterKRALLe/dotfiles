@@ -138,3 +138,18 @@
         background-color: #BB9AF7;
     }
 }
+
+.scales {
+    progressbar trough {
+        background-color: $background-inverse;
+        border-radius: 10px;
+        min-height: 9px;
+        min-width: 13em;
+
+        progress {
+            min-height: 9px;
+            border-radius: 10px;
+            background: $background-accent-p;
+        }
+    }
+}
