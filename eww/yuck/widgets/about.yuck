@@ -1,0 +1,101 @@
+(defwidget about []
+  (box
+    :class "about"
+    :orientation "v"
+    :space-evenly false
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      (box
+        :space-evenly false
+        :class "top"
+        (label
+          :hexpand true
+          :halign "center"
+          :text whoami
+        )
+        (eventbox
+          :cursor "pointer"
+          :halign "end"
+          
+          :onclick "scripts/newtoggle.sh about &"
+          (image
+            :path "icons/close.svg"
+            :image-width 45
+          )
+        )
+      )
+      (box
+        :class "os-logo"
+      )
+    )
+    (box
+      :class "info"
+      (box
+        :orientation "v"
+        (label
+          :class "s"
+          :halign "start"
+          :text "OS"
+        )
+        
+        (label
+          :class "s"
+          :halign "start"
+          :text "Kernel"
+        )
+        
+        (label
+          :class "s"
+          :halign "start"
+          :text "Uptime"
+        )
+        
+        (label
+          :class "s"
+          :halign "start"
+          :text "Shell"
+        )
+        
+        (label
+          :class "s"
+          :halign "start"
+          :text "Wayland Compositor"
+        )
+      )
+      (box
+        :orientation "v"
+        (label
+          :class "s"
+          :halign "end"
+          :text os
+        )
+        
+        (label
+          :class "s"
+          :halign "end"
+          :text kernel
+        )
+        
+        (label
+          :class "s"
+          :halign "end"
+          :text uptime
+        )
+        
+        (label
+          :class "s"
+          :halign "end"
+          :text shell
+        )
+        
+        (label
+          :class "s"
+          :halign "end"
+          :text wm
+        )
+      )
+    )
+  )
+)

@@ -1,0 +1,175 @@
+(defwidget _menu []
+  (eventbox
+    :cursor "pointer"
+    :onclick "scripts/newtoggle.sh menu &"
+    :class "menu"
+    (box
+      (image
+        :path "./icons/Hyprland.svg"
+        :image-height 24
+      )
+    )
+  )
+)
+
+(defwidget _workspaces []
+  (eventbox
+    :cursor "pointer"
+    :class "workspaces"
+    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box
+      :orientation "h"
+      :spacing 15
+      (for ws in my-workspaces
+        (button :onclick "hyprctl dispatch workspace ${ws}"
+          :width 30
+          :height 30
+          (label
+            :style "font-size: 1.1em"
+            :class {
+            workspaces[ws - 1] == 1 ? "active" :
+            workspaces[ws - 1] == 2 ? "used" :
+            "unused"
+            }
+            :text {
+            workspaces[ws - 1] == 1 ? "" :
+            workspaces[ws - 1] == 2 ? "" :
+            ""
+            }
+            :xalign 0.5
+            :yalign 0.5
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget _battery []
+  (box
+    :class "battery"
+    (label :text "${BATcapacity}%" :style "margin-right: 0.1em")
+    (image :path {
+      BATstatus == "charging" ? "./icons/battery-charging.svg" :
+      BATcapacity < 10 ? "./icons/battery-empty-fill.svg" :
+      BATcapacity < 31 ? "./icons/battery-low-fill.svg" :
+      BATcapacity < 60 ? "./icons/battery-medium-fill.svg" :
+      BATcapacity < 91 ? "./icons/battery-high-fill.svg" :
+      "./icons/battery-full-fill.svg"
+    } :image-height 22)
+  )
+)
+
+(defwidget _network []
+  (box
+    :class "network"
+    (label :text {
+      strength == "" ? "󰤭" :
+      strength < 26 ? "󰤟" :
+      strength < 51 ? "󰤢" :
+      strength < 76 ? "󰤥" :
+      "󰤨"}
+    )
+  )
+)
+
+(defwidget _microphone []
+  (box :class "microphone" :style "padding-left: 1em" :space-evenly false :orientation "h" :spacing 3
+    (button :onclick "pamixer --default-source -t"
+      (label :style "font-size: 1.4em" :text {mic == true ? "󰍭" :
+        "󰍬"
+        }
+      )
+    )
+  )
+)
+
+(defwidget _volume []
+  (box
+    :class "volume"
+    (label
+      :style "font-size: 1.2em"
+      :text {
+      volume.state == "true" ? "󰝟" :
+      volume.level < "35" ? "󰕿" :
+      volume.level < "70" ? "󰖀" :
+      "󰕾"
+    })
+  )
+)
+
+
+(defvar active "nic")
+(defwidget _datetime []
+  (eventbox
+    :class "datetime ${active}"
+    :onclick "scripts/newtoggle.sh calendar &"
+    :cursor "pointer"
+    (label
+      :text panel_clock
+    )
+  )
+)
+
+(defwidget bar []
+  (centerbox
+    :class "bar"
+    (box
+      :class "subbar"
+      :halign "start"
+      :space-evenly false
+      :spacing 30
+      
+      (_menu)
+      (eventbox
+        :cursor "pointer"
+        :onclick "scripts/newtoggle.sh mpris &"
+        (box
+          :space-evenly false
+          :spacing 30
+          (label
+            :style "font-size: 1.3em"
+            :text "󰎈"
+          )
+          (systray
+            :pack-direction "ltr"
+          )
+        )
+      )
+    )
+    (box
+      :class "subbar"
+      :halign "center"
+      (_workspaces)
+    )
+    (box
+      :class "subbar"
+      :halign "end"
+      :space-evenly false
+      :spacing 20
+      
+      (eventbox
+        :cursor "pointer"
+        :onclick "scripts/newtoggle.sh system-menu &"
+        :style {open_system-menu == true ? "background: rgba(39, 225, 250, 0.125); border-radius: 999px" : ""}
+        
+        (box
+          :space-evenly false
+          :spacing 25
+          (_volume)
+          (label
+            :style "font-size: 1.1em"
+            :text {
+            strength == "" ? "󰤭" :
+            strength < 26 ? "󰤟" :
+            strength < 51 ? "󰤢" :
+            strength < 76 ? "󰤥" :
+            "󰤨"}
+          )
+          (_battery)
+        )
+      )
+      (_datetime)
+    )
+  )
+)

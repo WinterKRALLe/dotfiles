@@ -1,0 +1,36 @@
+.about {
+    background: $background-base;
+    color: $text-base;
+    border-radius: $rounded-large;
+    border: 1px solid $text-inverse;
+
+    .top {
+        padding: 1em;
+
+        label {
+            margin-left: 2em;
+        }
+    }
+
+    .info {
+        border-radius: $rounded-large;
+        margin: 1em;
+        padding: 1em;
+        background: $background-muted;
+
+        box {
+
+            .s {
+                padding: .5em;
+            }
+        }
+    }
+}
+
+.os-logo {
+    padding: 5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-image: url($icons+'arch.svg');
+}

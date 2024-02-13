@@ -1,0 +1,42 @@
+.menu-content {
+    border: 1px solid $text-inverse;
+    border-radius: $rounded-medium;
+    background: $background-base;
+
+    .menu-wrapper {
+        min-width: 13.75em;
+        margin: 0 .5em;
+
+        .separator {
+            background: $text-inverse;
+            margin: 0 .5em;
+        }
+
+        .not {
+            margin: .25em 0;
+
+            &.middle {
+                margin: 0;
+            }
+
+            &.bottom {
+                margin: 0;
+                margin-bottom: .5em;
+            }
+
+            .item {
+
+                &:hover {
+                    background: $background-inverse;
+                    border-radius: $rounded-medium;
+                    color: $text-base;
+                }
+
+                label {
+                    padding: .25em .5em;
+
+                }
+            }
+        }
+    }
+}
