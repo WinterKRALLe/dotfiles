@@ -1,13 +1,4 @@
-(defwindow bar0
-  :monitor 0
-  :stacking "fg"
-  :exclusive true
-  :geometry (geometry :width "100%" :anchor "top center")
-  (bar)
-)
-
-(defwindow bar1
-  :monitor 1
+(defwindow bar
   :stacking "fg"
   :exclusive true
   :geometry (geometry :width "100%" :anchor "top center")

@@ -1,130 +1,107 @@
+(defwidget menu_item [action label ?class]
+  (box
+    :class "not ${class}"
+    (eventbox
+      :class "item"
+      :cursor "pointer"
+      :timeout 30000
+      :onclick action
+      
+      (label :xalign 0 :text label)
+    )
+  )
+)
+
 (defwidget menu []
   (eventbox
-    :onhoverlost "scripts/toggle.sh menu"
     :class "menu-content"
-    :space-evenly false
     
     (box
       :orientation "v"
       :space-evenly false
       :class "menu-wrapper"
       
+      (menu_item
+        :action "scripts/newtoggle.sh menu && scripts/newtoggle.sh about &"
+        :label "About"
+      )
+      
       (box
-        :orientation "v"
-        :class "not"
-        (eventbox
-          :class "item"
-          :cursor "pointer"
-          :onclick "scripts/toggle.sh menu && scripts/toggle.sh about"
-          :onhover "eww close location0 || eww close location1"
-          
-          (label
-            :xalign 0
-            :text "About"
-          )
-        )
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && wofi --show drun &"
+        :label "Apps"
+      )
+      
+      (box
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && hyprpicker -n -a"
+        :label "Eyedropper"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "scripts/newtoggle.sh menu && hyprshot -m region --clipboard-only"
+        :label "Screenshot to Copy"
+      )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Region Screenshot"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "scripts/newtoggle.sh menu && hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Screen Screenshot"
+      )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Window Screenshot"
+      )
+      
+      (box
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && systemctl suspend"
+        :label "Sleep"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "scripts/newtoggle.sh menu && reboot"
+        :label "Restart"
+      )
+      
+      (menu_item
+        :action "poweroff"
+        :label "Shut Down"
       )
       (box
         :height 1
         :class "separator"
       )
-      (box
-        :class "not"
-        
-        (eventbox
-          :class "item"
-          :cursor "pointer"
-          :onclick "wofi --show drun &"
-          
-          (label
-            :xalign 0
-            :text "Apps"
-          )
-        )
+      
+      (menu_item
+        :action "scripts/newtoggle.sh menu && swaylock"
+        :label "Lock Screen"
       )
-      (box
-        :height 1
-        :class "separator"
-      )
-      ; (box
-        ;   :class "not"
-        
-        ;   (eventbox
-          ;     :class "item"
-          ;     :onclick "thunar &"
-          ;     :cursor "pointer"
-          
-          ;     (box
-            ;       (label
-              ;         :xalign 0
-            ;       :text "Location")
-            ;       (label :xalign 1 :text ">")
-          ;     )
-        ;   )
-      ; )
-      ; (box
-        ;   :height 1
-        ;   :class "separator"
-      ; )
-      (box
-        :class "not"
-        
-        (eventbox
-          :onclick "systemctl suspend"
-          :cursor "pointer"
-          :class "item"
-          :onhover "eww close location0 || eww close location1"
-          
-          (label :xalign 0 :text "Sleep")
-        )
-      )
-      (box
-        :class "not middle"
-        
-        (eventbox
-          :onclick "reboot"
-          :cursor "pointer"
-          :class "item"
-          
-          (label :xalign 0 :text "Restart")
-        )
-      )
-      (box
-        :class "not"
-        
-        (eventbox
-          :onclick "poweroff"
-          :cursor "pointer"
-          :class "item"
-          
-          (label :xalign 0 :text "Shut Down")
-        )
-      )
-      (box
-        :height 1
-        :class "separator"
-      )
-      (box
-        :class "not"
-        
-        (eventbox
-          :onclick "gtklock &"
-          :cursor "pointer"
-          :class "item"
-          
-          (label :xalign 0 :text "Lock Screen")
-        )
-      )
-      (box
-        :class "not bottom"
-        
-        (eventbox
-          :onclick "hyprctl dispatch exit"
-          :cursor "pointer"
-          :class "item"
-          
-          (label :xalign 0 :text "Log Out ${user}")
-        )
+      
+      (menu_item
+        :class "bottom"
+        :action "hyprctl dispatch exit"
+        :label "Log Out ${user}"
       )
     )
   )

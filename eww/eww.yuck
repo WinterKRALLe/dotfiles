@@ -36,27 +36,9 @@
 ;;        MUSIC       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; (defpoll m :interval "2s" `scripts/music.sh`)
-(deflisten m :initial "(label :text 'No players found')" `scripts/mpris.sh`)
+(deflisten  music     :initial "No players found" `scripts/mpris.sh`)
+(deflisten  players  :initial "[]" `scripts/players.sh`)
 
-
-(defvar hej "[1,2]")
-(defvar ff `
-  [{
-  "name": "firefox.instance_1_594",
-  "title": "Black Rebel Motorcycle Club - Howl - EXTENDED VERSION",
-  "artist": "paradisefails",
-  "artUrl": "file:///home/winter/.mozilla/firefox/firefox-mpris/598746_25.png",
-  "status": "Paused",
-  "length": ""
-  },{
-  "name": "spotify",
-  "title": "All My Life",
-  "artist": "Attack Attack!",
-  "artUrl": "https://i.scdn.co/image/ab67616d0000b27330f9b2da21d1575086b12418",
-  "status": "Playing",
-  "length": ""
-  }]
-`)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     MICROPHONE     ;;
@@ -93,7 +75,7 @@
 ;;        ABOUT       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defpoll    whoami  :interval   "300s"  `echo $(whoami)@$(hostname)`)
-(defpoll    os      :interval   "300s"  `uname -a | awk '{ print $2 }'`)
+(defpoll    os      :interval   "300s"  `hyprctl systeminfo | grep os-release: | awk -F 'os-release: NAME="' '{print $2}' | awk -F '"' '{print $1}'`)
 (defpoll    kernel  :interval   "300s"  `uname -r`)
 (defpoll    shell   :interval   "300s"  `echo $SHELL | awk -F '/' '{print $NF}'`)
 (defpoll    wm      :interval   "300s"  `echo $XDG_CURRENT_DESKTOP`)
@@ -105,13 +87,10 @@
 (defpoll sinks :interval "1s" `scripts/sinks.sh`)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;
-;;        COPYQ       ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll q :interval "2s" `scripts/clipboard.sh`)
-
-
-(defvar open_tools false)
+(defvar open_about false)
+(defvar open_calendar false)
+(defvar open_mpris false)
+(defvar open_menu false)
 (defvar open_system-menu false)
 
 (include "./yuck/widgets.yuck")

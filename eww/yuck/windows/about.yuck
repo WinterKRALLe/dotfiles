@@ -1,23 +1,13 @@
-(defwindow about0
-  :monitor 0
+(defwindow about
   :stacking "fg"
   :geometry (geometry
     :anchor "top left"
   )
-  (box
-    :style "margin: .5em 0 0 .5em"
-    (about)
-  )
+  (about)
 )
 
-(defwindow about1
-  :monitor 1
+(defwindow about-closer
+  :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
-  :geometry (geometry
-    :anchor "top left"
-  )
-  (box
-    :style "margin: .5em 0 0 .5em"
-    (about)
-  )
-)
+  :focusable false
+  (closer :window "about"))

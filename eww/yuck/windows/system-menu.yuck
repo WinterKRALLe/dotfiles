@@ -1,13 +1,11 @@
-(defwindow system-menu0
-  :monitor 0
+(defwindow system-menu
   :stacking "fg"
   :geometry (geometry :width "2px" :height "2px" :anchor "top right" :y "1%")
   (_system-menu)
 )
 
-(defwindow system-menu1
-  :monitor 1
+(defwindow system-menu-closer
+  :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
-  :geometry (geometry :width "2px" :height "2px" :anchor "top right" :y "1%")
-  (_system-menu)
-)
+  :focusable false
+  (closer :window "system-menu"))

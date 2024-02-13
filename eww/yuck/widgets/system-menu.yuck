@@ -21,11 +21,11 @@
         :onchange "pamixer --set-volume {}"
       )
     )
-    (label
-      :class "val"
-      :xalign 1
-      :text "${volume.level}%"
-    )
+    ; (label
+      ;   :class "val"
+      ;   :xalign 1
+      ;   :text "${volume.level}%"
+    ; )
   )
 )
 (defwidget sysslider_brightness []
@@ -51,10 +51,10 @@
         :onchange "brightnessctl s {}"
       )
     )
-    (label
-      :class "pval val"
-      :xalign 1
-    :text "${brightnessP}")
+    ; (label
+      ;   :class "pval val"
+      ;   :xalign 1
+    ; :text "${brightnessP}")
   )
 )
 
@@ -115,14 +115,12 @@
     :transition "slideleft"
     :reveal open_system-menu
     (eventbox
-      :onhoverlost "scripts/newtoggle.sh system-menu &"
       :class "event-sys"
       (box
         :class "system"
         :space-evenly false
         :orientation "v"
         :spacing 15
-        :style "margin-right: 1em"
         
         (box
           :space-evenly false

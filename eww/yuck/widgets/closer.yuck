@@ -1,0 +1,2 @@
+(defwidget closer [window]
+  (eventbox :onclick "scripts/newtoggle.sh ${window} &"))

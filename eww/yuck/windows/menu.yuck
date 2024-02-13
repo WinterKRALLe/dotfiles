@@ -1,110 +1,15 @@
-(defwindow menu0
-  :monitor 0
+(defwindow menu
   :stacking "fg"
   :geometry (geometry
-    :width  "100%"
-    :height "100%"
     :anchor "top left"
+    :x "15px"
+    :y "10px"
   )
-  (box
-    :style "margin-left: .75em"
-    :space-evenly false
-    :hexpand true
-    (box
-      :space-evenly false
-      :orientation "v"
-      (menu)
-      (eventbox
-        :vexpand true
-        :onhover "eww open menu0 --toggle"
-      )
-    )
-    (eventbox
-      :hexpand true
-      :onhover "eww open menu0 --toggle"
-    )
-  )
+  (menu)
 )
 
-(defwindow menu1
-  :monitor 1
+(defwindow menu-closer
+  :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
-  :geometry (geometry
-    :width  "100%"
-    :height "100%"
-    :anchor "top left"
-  )
-  (box
-    :style "margin-left: .75em"
-    :space-evenly false
-    :hexpand true
-    (box
-      :space-evenly false
-      :orientation "v"
-      (menu)
-      (eventbox
-        :vexpand true
-        :onhover "eww open menu1 --toggle"
-      )
-    )
-    (eventbox
-      :hexpand true
-      :onhover "eww open menu1 --toggle"
-    )
-  )
-)
-
-; (defwidget location []
-  ;   (box
-    ;     :class "location"
-    ;     (eventbox
-      ;       :onhoverlost "scripts/toggle.sh location"
-      ;       :cursor "pointer"
-      ;       :class "wrapper"
-      ;       (box
-        ;         :class "items"
-        ;         :orientation "v"
-        ;         :spacing 5
-        ;         (eventbox
-          ;           :class "item"
-          ;           :hexpand true
-          ;           :cursor "pointer"
-          ;           :onclick "thunar $HOME/.config &"
-          ;           (label :xalign 0 :text "Dotfiles")
-        ;         )
-        ;         (eventbox
-          ;           :class "item"
-          ;           :cursor "pointer"
-          ;           :onclick "thunar $HOME/Downloads &"
-          ;           (label :xalign 0 :text "Downloads")
-        ;         )
-        ;         (eventbox
-          ;           :class "item"
-          ;           :cursor "pointer"
-          ;           :onclick "thunar $HOME/Pictures &"
-          ;           (label :xalign 0 :text "Pictures")
-        ;         )
-      ;       )
-    ;     )
-  ;   )
-; )
-
-(defwindow location0
-  :monitor 0
-  :stacking "fg"
-  :geometry (geometry
-    :x "12.5%" :y "1.56%"
-    :anchor "top left"
-  )
-  (location)
-)
-
-(defwindow location1
-  :monitor 1
-  :stacking "fg"
-  :geometry (geometry
-    :x "12.5%" :y "1.56%"
-    :anchor "top left"
-  )
-  (location)
-)
+  :focusable false
+  (closer :window "menu"))

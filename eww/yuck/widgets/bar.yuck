@@ -1,7 +1,7 @@
 (defwidget _menu []
   (eventbox
     :cursor "pointer"
-    :onclick "scripts/toggle.sh menu"
+    :onclick "scripts/newtoggle.sh menu &"
     :class "menu"
     (box
       (image
@@ -103,9 +103,7 @@
 (defwidget _datetime []
   (eventbox
     :class "datetime ${active}"
-    :onclick {active == "nic" ?
-    "eww update active=active; scripts/toggle.sh calendar" :
-    "eww update active=nic; scripts/toggle.sh calendar"}
+    :onclick "scripts/newtoggle.sh calendar &"
     :cursor "pointer"
     (label
       :text panel_clock
@@ -125,14 +123,13 @@
       (_menu)
       (eventbox
         :cursor "pointer"
-        :onclick "scripts/newtoggle.sh tools &"
+        :onclick "scripts/newtoggle.sh mpris &"
         (box
           :space-evenly false
           :spacing 30
-          (image
-            :path "./icons/tools.svg"
-            :image-height 30
-            :style {open_tools == true ? "background: rgba(39, 225, 250, 0.125); border-radius: 999px" : ""}
+          (label
+            :style "font-size: 1.3em"
+            :text "󰎈"
           )
           (systray
             :pack-direction "ltr"

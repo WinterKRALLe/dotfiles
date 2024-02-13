@@ -4,6 +4,7 @@
     border-radius: $rounded-large;
     padding: 1em;
     margin: 0 1em 0 0;
+    min-width: 22em;
 
     .muted {
         background: $background-muted;
@@ -64,7 +65,6 @@
 
 .sysslider {
 
-
     scale trough {
         background-color: $background-inverse;
         border-radius: 10px;
@@ -86,10 +86,10 @@
 
 .sicon {
     min-width: 30px;
-}
 
-.brightness .sicon {
-    font-size: 1.3em;
+    label {
+        font-size: 1.3em;
+    }
 }
 
 .pval {

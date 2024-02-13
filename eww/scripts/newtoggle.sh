@@ -1,22 +1,22 @@
 #!/bin/bash
 
 toggle_window() {
-    MONITOR=$(hyprctl monitors | awk '/ID/ {gsub("[:)]",""); id=$NF} /focused: yes/ {print id}' | awk '{if (NF) print}')
+    MONITOR=$(hyprctl monitors | awk '/model/ {gsub("[:)]",""); id=$NF} /focused: yes/ {print id}' | awk '{if (NF) print}')
     window_name=$1
     state_var="open_$window_name"
     state=$(eww get "$state_var")
 
     open_window() {
-        eww open $window_name$MONITOR-closer1
-        eww open "$window_name$MONITOR"
+        eww open --screen $MONITOR $window_name-closer
+        eww open --screen $MONITOR $window_name
         eww update "$state_var=true"
     }
 
     close_window() {
-        eww close $window_name$MONITOR-closer1
+        eww close $window_name-closer
         eww update "$state_var=false"
         sleep 0.5s
-        eww close $window_name$MONITOR
+        eww close $window_name
     }
 
     case $1 in

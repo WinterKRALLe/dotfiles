@@ -1,21 +1,13 @@
-(defwindow calendar0
-  :monitor 0
+(defwindow calendar
   :stacking "fg"
   :geometry (geometry
+    :x "0.8%"
   :anchor "top right")
-  (box
-    :style "margin-right: .75em"
-    (_calendar)
-  )
+  (_calendar)
 )
 
-(defwindow calendar1
-  :monitor 1
+(defwindow calendar-closer
+  :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
-  :geometry (geometry
-  :anchor "top right")
-  (box
-    :style "margin-right: .75em"
-    (_calendar)
-  )
-)
+  :focusable false
+  (closer :window "calendar"))

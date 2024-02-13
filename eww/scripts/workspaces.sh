@@ -40,5 +40,7 @@ print() {
 print
 
 socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
-    print
+    if [[ $line =~ "focusedmon" || $line =~ "workspace" ]]; then
+        print
+    fi
 done

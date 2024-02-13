@@ -19,7 +19,7 @@
           :cursor "pointer"
           :halign "end"
           
-          :onclick "scripts/toggle.sh about"
+          :onclick "scripts/newtoggle.sh about &"
           (image
             :path "icons/close.svg"
             :image-width 45

@@ -9,15 +9,3 @@
   )
   (powermenu)
 )
-
-(defwindow powermenu1
-  :monitor 1
-  :stacking "fg"
-  :focusable true
-  :geometry (geometry
-    :width  "100%"
-    :height "120%"
-    :anchor "center center"
-  )
-  (powermenu)
-)
