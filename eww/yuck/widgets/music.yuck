@@ -1,8 +1,0 @@
-(defwidget music []
-  (eventbox
-    :onhoverlost "scripts/toggle.sh music"
-    (literal
-      :content bitch
-    )
-  )
-)
