@@ -22,7 +22,7 @@
       :class "menu-wrapper"
       
       (menu_item
-        :action "scripts/newtoggle.sh about &"
+        :action "scripts/newtoggle.sh about"
         :label "About"
       )
       
@@ -32,7 +32,7 @@
       )
       
       (menu_item
-        :action "wofi --show drun &"
+        :action "wofi --show drun"
         :label "Apps"
       )
       
