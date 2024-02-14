@@ -5,7 +5,7 @@
       :class "item"
       :cursor "pointer"
       :timeout 30000
-      :onclick action
+      :onclick "eww close menu && eww close menu-closer && eww update open_menu=false && ${action} &"
       
       (label :xalign 0 :text label)
     )
@@ -22,7 +22,7 @@
       :class "menu-wrapper"
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && scripts/newtoggle.sh about &"
+        :action "scripts/newtoggle.sh about &"
         :label "About"
       )
       
@@ -32,7 +32,7 @@
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && wofi --show drun &"
+        :action "wofi --show drun &"
         :label "Apps"
       )
       
@@ -42,29 +42,29 @@
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && hyprpicker -n -a"
+        :action "hyprpicker -n -a"
         :label "Eyedropper"
       )
       
       (menu_item
         :class "middle"
-        :action "scripts/newtoggle.sh menu && hyprshot -m region --clipboard-only"
+        :action "hyprshot -m region --clipboard-only"
         :label "Screenshot to Copy"
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :action "hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
         :label "Region Screenshot"
       )
       
       (menu_item
         :class "middle"
-        :action "scripts/newtoggle.sh menu && hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :action "hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
         :label "Screen Screenshot"
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :action "hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
         :label "Window Screenshot"
       )
       
@@ -74,13 +74,13 @@
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && systemctl suspend"
+        :action "systemctl suspend"
         :label "Sleep"
       )
       
       (menu_item
         :class "middle"
-        :action "scripts/newtoggle.sh menu && reboot"
+        :action "reboot"
         :label "Restart"
       )
       
@@ -94,7 +94,7 @@
       )
       
       (menu_item
-        :action "scripts/newtoggle.sh menu && swaylock"
+        :action "swaylock"
         :label "Lock Screen"
       )
       
