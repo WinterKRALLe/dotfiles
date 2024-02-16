@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# place it in $HOME, since it is set in hypr.conf, make sure it is executable (chmod +x ./launch_bar)
+
+if [[ ! $(pidof eww) ]]; then
+	eww daemon
+	sleep 1
+fi
+
+monitors=($(hyprctl monitors -j | jq -r '.[] | .id'))
+for i in "${!monitors[@]}"; do
+	eww open --screen $i bar --id $i
+#	eww open --screen $i tools --id $i
+done
