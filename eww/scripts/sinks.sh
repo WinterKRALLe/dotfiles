@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readarray -t sinks <<< "$(pactl list sinks | grep device.product.name | awk -F=' ' '{print $2}' | tr -d \")"
+readarray -t sinks <<< "$(pactl list sinks | grep -E 'device.product.name|media.name' | awk -F=' ' '{print $2}' | tr -d \")"
 
 readarray -t switchSinks <<< "$(pactl list short sinks | awk '{print $2}')"
 
