@@ -1,0 +1,57 @@
+$icons: "/home/winter/.config/eww/icons/";
+
+$background-accent-p: #c53f39;
+$background-accent: #1793D1;
+$text-accent: #2fd6b5;
+$background-base: #11111c;
+$background-base-alpha: rgba($background-base, .3);
+$background-muted: #1a1926;
+$background-inverse: #252635;
+$background-hover-alpha: rgba(#000, .3);
+$text-base: #ffffff;
+$text-muted: #8f92a6;
+$text-inverse: #979bb0;
+$border: #565558;
+
+$rounded-full: 9999px;
+$rounded-large: 16px;
+$rounded-medium: 8px;
+
+* {
+    all: unset;
+    font-family: 'ubuntu nerd font';
+    font-size: large;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+}
+
+.button {
+    color: $text-base;
+    border-radius: $rounded-large;
+    transition: all 150ms ease-out;
+    background: $background-muted;
+
+    &:hover {
+        background: $background-inverse;
+    }
+
+    label {
+        padding: .5em 1.5em;
+    }
+}
+
+.open {
+    background: $background-inverse;
+    border-radius: $rounded-medium;
+    padding: .25em 1em;
+}
+
+@import "./scss/bar.scss";
+@import "./scss/powermenu.scss";
+@import "./scss/screenshot.scss";
+@import "./scss/system-menu.scss";
+@import "./scss/menu.scss";
+@import "./scss/calendar.scss";
+@import "./scss/mpris.scss";

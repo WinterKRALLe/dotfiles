@@ -1,0 +1,8 @@
+(defwindow powermenu
+  :stacking "bg"
+  :geometry (geometry
+    :x "1%"
+    :anchor "left center"
+  )
+  (powermenu)
+)

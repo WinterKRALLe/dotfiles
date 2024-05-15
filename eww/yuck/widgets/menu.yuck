@@ -1,0 +1,98 @@
+(defwidget menu_item [action label ?class]
+  (box
+    :class "not ${class}"
+    (eventbox
+      :class "item"
+      :cursor "pointer"
+      :timeout 30000
+      :onclick "eww close menu && eww close menu-closer && eww update open_menu=false && ${action} &"
+      
+      (label :xalign 0 :text label)
+    )
+  )
+)
+
+(defwidget menu []
+  (eventbox
+    :class "menu-content"
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "menu-wrapper"
+      
+      (menu_item
+        :action "wofi --show drun"
+        :label "Apps"
+      )
+      
+      (box
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "hyprpicker -n -a"
+        :label "Eyedropper"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "hyprshot -m region --clipboard-only"
+        :label "Screenshot to Copy"
+      )
+      
+      (menu_item
+        :action "hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Region Screenshot"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Screen Screenshot"
+      )
+      
+      (menu_item
+        :action "hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Window Screenshot"
+      )
+      
+      (box
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "systemctl suspend"
+        :label "Sleep"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "reboot"
+        :label "Restart"
+      )
+      
+      (menu_item
+        :action "poweroff"
+        :label "Shut Down"
+      )
+      (box
+        :height 1
+        :class "separator"
+      )
+      
+      (menu_item
+        :action "hyprlock"
+        :label "Lock Screen"
+      )
+      
+      (menu_item
+        :class "bottom"
+        :action "hyprctl dispatch exit"
+        :label "Log Out ${user}"
+      )
+    )
+  )
+)

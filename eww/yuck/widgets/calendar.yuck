@@ -1,0 +1,7 @@
+(defwidget _calendar []
+  (eventbox
+    :class "calendar"
+    :onhoverlost "scripts/newtoggle.sh calendar &"
+    (calendar)
+  )
+)

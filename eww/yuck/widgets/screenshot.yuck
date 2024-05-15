@@ -1,0 +1,58 @@
+(defwidget screenshotbutton [action label icon]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :tooltip label
+    :class "button-bin"
+    (eventbox
+      :cursor "pointer"
+      (button
+        :timeout 30000
+        :class "button"
+        :onclick action
+        (box :class "${icon}"
+          (label :class "label" :text label)
+        )
+      )
+    )
+  )
+)
+
+(defwidget screenshotmenu []
+  (eventbox
+    :onhoverlost "scripts/toggle.sh screenshot"
+    (box
+      :class "content"
+      :halign "center"
+      :valign "center"
+      :space-evenly false
+      :orientation "v"
+      (label :text "Screenshot" :class "title")
+      (box
+        :class "screenshotmenu"
+        :space-evenly true
+        :orientation "v"
+        (screenshotbutton
+          :action "eww close screenshot0 || eww close screenshot1; hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+          :icon "region-screenshot"
+          :label "Region"
+        )
+        (screenshotbutton
+          :action "eww close screenshot0 || eww close screenshot1; hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+          :icon "screenshot"
+          :label "Screen"
+        )
+        (screenshotbutton
+          :action "eww close screenshot0 || eww close screenshot1; hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+          :icon "window-screenshot"
+          :label "Window"
+        )
+        (screenshotbutton
+          :action "eww close screenshot0 || eww close screenshot1;  hyprshot -m region --clipboard-only"
+          :icon "clipboard-screenshot"
+          :label "Clipboard"
+        )
+      )
+    )
+  )
+)

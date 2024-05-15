@@ -1,0 +1,15 @@
+(defwindow menu
+  :stacking "fg"
+  :geometry (geometry
+    :anchor "top left"
+    :x "15px"
+    :y "10px"
+  )
+  (menu)
+)
+
+(defwindow menu-closer
+  :geometry (geometry :width "100%" :height "110%")
+  :stacking "fg"
+  :focusable false
+  (closer :window "menu"))

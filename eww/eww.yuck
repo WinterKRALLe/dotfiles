@@ -1,0 +1,89 @@
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        TIME        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    panel_clock :interval "1s" `date +"%a %d %b    %H:%M"`)
+(defpoll    hour    :interval "1800s" `date +%H`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;       BATTERY      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(deflisten  battery   :initial "{}"   `scripts/battery.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     WORKSPACES     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(deflisten    workspaces    `scripts/workspaces.sh`)
+(defvar     my-workspaces   "[1,2,3,4,5,6,7]")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;       NETWORK      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    strength    :interval   "60s"   `nmcli -f IN-USE,SIGNAL device wifi | grep '*' | awk '{ print $2 }'`)
+(deflisten  network     :initial    "{}"    `scripts/network.sh`)
+; (defpoll    WiFistatus  :interval   "5s"   `nmcli r wifi`)
+; (defpoll    localIP     :interval   "5s"    `ip route | awk 'NR==1 { print $9 }'`)
+; (defpoll currentNetInterface :interval "3s" `ip route get 1.1.1.1 | awk '{ print $5 }' | tr -d '\n' | cut -f1 -d '%'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        MUSIC       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+; (defpoll m :interval "2s" `scripts/music.sh`)
+(deflisten  music     :initial "No players found" `scripts/mpris.sh`)
+(deflisten  players  :initial "[]" `scripts/players.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     MICROPHONE     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll mic :interval "1s" `pamixer --default-source --get-mute` )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        AUDIO       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(deflisten  volume   :initial "{}"   `scripts/volume.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        USER        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll user :interval "1s" `whoami | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;     BRIGHTNESS     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll brightness :interval "1s" `brightnessctl g`)
+(defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;      BLUETOOTH     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll bluetoothstatus :interval ".5s" `bluetoothctl show | grep "Powered" | awk '{print $2}'`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;        SINKS       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll sinks :interval "1s" `scripts/sinks.sh`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;       WEATHER      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll weather :initial "" :interval "1800s" `python scripts/weather.py`)
+
+
+(defvar open_about false)
+(defvar open_calendar false)
+(defvar open_mpris false)
+(defvar open_menu false)
+(defvar open_system-menu false)
+
+(include "./yuck/widgets.yuck")
+(include "./yuck/windows.yuck")
