@@ -5,4 +5,6 @@
     <img src="https://img.shields.io/github/repo-size/WinterKRALLe/dotfiles?style=for-the-badge&color=a8c7ff&labelColor=1a1b1f">
 </div>
 
-![HyprEWW](https://github.com/WinterKRALLe/dotfiles/blob/main/.github/20240213_09h40m42s_grim.png)
+![HyprEWW](https://github.com/WinterKRALLe/dotfiles/blob/main/.github/2024-05-15-130323_hyprshot.png)
+![SystemMenu](https://github.com/WinterKRALLe/dotfiles/blob/main/.github/2024-05-15-130333_hyprshot.png)
+![MprisMenu](https://github.com/WinterKRALLe/dotfiles/blob/main/.github/2024-05-15-130340_hyprshot.png)
