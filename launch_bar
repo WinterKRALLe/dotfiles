@@ -9,7 +9,16 @@ fi
 
 monitors=($(hyprctl monitors -j | jq -r '.[] | .id'))
 for i in "${!monitors[@]}"; do
-	eww open --screen $i powermenu --id p$i
-	eww open --screen $i bar --id b$i
-	eww open --screen $i weather --id w$i
+    # Use unique IDs for each bar by appending monitor ID
+    bar_id="b${monitors[$i]}"
+    # Open the bar for each monitor with a unique ID
+    eww open --screen $i bar --id $bar_id
 done
+
+
+#monitors=($(hyprctl monitors -j | jq -r '.[] | .id'))
+#for i in "${!monitors[@]}"; do
+#	eww open --screen $i powermenu --id p$i
+#	eww open --screen $i bar --id b$i
+#	eww open --screen $i weather --id w$i
+#done
