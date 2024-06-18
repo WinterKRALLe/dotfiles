@@ -1,13 +1,13 @@
 .calendar {
-    background: $background-base;
-    border: 1px solid $text-inverse;
-    border-radius: $rounded-large;
+    @include window;
+    padding: 1em;
+
     color: $text-base;
 
     calendar {
 
         &:selected {
-            background: $background-accent-p;
+            background: $bg-accent;
             border-radius: $rounded-large;
 
         }
@@ -18,7 +18,6 @@
 
         &.highlight {
             background-color: transparent;
-            color: $text-accent;
         }
 
         &:indeterminate {

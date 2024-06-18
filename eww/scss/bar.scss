@@ -1,12 +1,9 @@
 .bar {
-    //    border-radius: $rounded-medium;
+    background: $bg-base-alpha;
     color: #bae5ec;
-    background: rgba($background-base, .3);
     padding: .25em 2em;
 
     .subbar {
-        //      padding: .5em 2em;
-
         label {
             font-family: "good times", "ubuntu nerd font";
             font-size: medium;
@@ -23,7 +20,7 @@
 
 
 .weather {
-    background: $background-base-alpha;
+    background: $bg-base-alpha;
     border-radius: $rounded-medium;
 
     label {

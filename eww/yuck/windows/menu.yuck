@@ -12,4 +12,5 @@
   :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
   :focusable false
+  :namespace "fromEWW"
   (closer :window "menu"))

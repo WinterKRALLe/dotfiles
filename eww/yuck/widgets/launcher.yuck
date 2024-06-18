@@ -1,0 +1,48 @@
+(defwidget launcher_item [app]
+  (button
+    :onclick "cd ~ && gio launch ${app.desktop} & eww close launcher &" :class "launcher-item"
+    (box
+      :space-evenly false
+      :spacing 15
+      (image :path {app.icon} :image-width 36 :image-height 36)
+      (label :class "launcher-app-label" :text {app.name})
+    )
+  )
+)
+
+(defwidget launcher []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 15
+    :class "launcher"
+    
+    (box
+      (input :class "launcher-search-input" :hexpand true :onchange "go run scripts/launcher.go --query '{}' &" :onaccept "cd ~ && gio launch ${apps.filtered[0].desktop} & eww close launcher &")
+    )
+    (scroll
+      :vscroll true :class "launcher-scroll"
+      (box :orientation "v" :space-evenly false
+        (box :visible {apps.search == false ? true : false}
+          :orientation "v"
+          :space-evenly false
+          :spacing 10
+          (for app in {apps.apps}
+            (launcher_item :app app)
+          )
+        )
+        (box :orientation "v" :space-evenly false :visible {apps.search == false ? false : true}
+          (label :class "launcher-category" :halign "start" :text "Search")
+          (box
+            :orientation "v"
+            :space-evenly false
+            :spacing 10
+            (for app in {apps.filtered}
+              (launcher_item :app app)
+            )
+          )
+        )
+      )
+    )
+  )
+)

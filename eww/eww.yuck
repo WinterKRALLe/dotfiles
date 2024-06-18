@@ -1,7 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        TIME        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll    panel_clock :interval "1s" `date +"%a %d %b    %H:%M"`)
 (defpoll    hour    :interval "1800s" `date +%H`)
 
 
@@ -23,15 +22,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defpoll    strength    :interval   "60s"   `nmcli -f IN-USE,SIGNAL device wifi | grep '*' | awk '{ print $2 }'`)
 (deflisten  network     :initial    "{}"    `scripts/network.sh`)
-; (defpoll    WiFistatus  :interval   "5s"   `nmcli r wifi`)
-; (defpoll    localIP     :interval   "5s"    `ip route | awk 'NR==1 { print $9 }'`)
-; (defpoll currentNetInterface :interval "3s" `ip route get 1.1.1.1 | awk '{ print $5 }' | tr -d '\n' | cut -f1 -d '%'`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        MUSIC       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-; (defpoll m :interval "2s" `scripts/music.sh`)
 (deflisten  music     :initial "No players found" `scripts/mpris.sh`)
 (deflisten  players  :initial "[]" `scripts/players.sh`)
 
@@ -51,14 +46,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        USER        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll user :interval "1s" `whoami | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}'`)
+(defpoll user :interval "1000s" `whoami | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}'`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     BRIGHTNESS     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll brightness :interval "1s" `brightnessctl g`)
-(defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
+(deflisten brightness :initial "" `scripts/brightness.sh`)
+; (defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -77,6 +72,14 @@
 ;;       WEATHER      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defpoll weather :initial "" :interval "1800s" `python scripts/weather.py`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;      LAUNCHER      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(deflisten apps :initial "{}" `go run scripts/launcher.go`)
+(defvar ANIM_DURATION "500ms")
+(defvar open_launcher false)
 
 
 (defvar open_about false)

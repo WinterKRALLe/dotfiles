@@ -1,5 +1,5 @@
 (defwindow bar
   :exclusive true
   :geometry (geometry :width "100%" :anchor "top center")
-  (bar)
+  (Bar)
 )

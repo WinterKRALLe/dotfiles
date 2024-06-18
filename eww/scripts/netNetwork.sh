@@ -15,8 +15,10 @@ print() {
     echo $JSON_STRING
 }
 
-print
+# print
 
-nmcli monitor | while read -r _; do
-    print
+journalctl -u systemd-networkd.service -f | while read -r _; do
+    if [[ $line =~ "Connected" || $line =~ "Link DOWN" ]]; then
+        echo "change"
+    fi
 done

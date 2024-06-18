@@ -4,5 +4,6 @@
     :x "1%"
     :anchor "left center"
   )
+  :namespace "fromEWW"
   (powermenu)
 )

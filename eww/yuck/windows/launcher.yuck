@@ -1,0 +1,8 @@
+(defwindow launcher
+  :stacking "fg"
+  :focusable true
+  :geometry (geometry
+    :anchor "center"
+  )
+  (launcher)
+)

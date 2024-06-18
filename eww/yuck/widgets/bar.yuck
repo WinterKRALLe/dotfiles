@@ -1,4 +1,4 @@
-(defwidget _menu []
+(defwidget Menu []
   (eventbox
     :cursor "pointer"
     :onclick "scripts/newtoggle.sh menu &"
@@ -12,7 +12,7 @@
   )
 )
 
-(defwidget _workspaces []
+(defwidget Workspaces []
   (eventbox
     :cursor "pointer"
     :class "workspaces"
@@ -45,7 +45,7 @@
   )
 )
 
-(defwidget _battery []
+(defwidget Battery []
   (box
     :class "battery"
     (label :text "${battery.capacity}%" :style "margin-right: 0.1em")
@@ -60,18 +60,15 @@
   )
 )
 
-(defwidget _microphone []
+(defwidget Microphone []
   (box :class "microphone" :style "padding-left: 1em" :space-evenly false :orientation "h" :spacing 3
     (button :onclick "pamixer --default-source -t"
-      (label :style "font-size: 1.4em" :text {mic == true ? "󰍭" :
-        "󰍬"
-        }
-      )
+      (label :style "font-size: 1.4em" :text {mic == true ? "󰍭" : "󰍬"})
     )
   )
 )
 
-(defwidget _volume []
+(defwidget Volume []
   (box
     :class "volume"
     (label
@@ -86,18 +83,37 @@
 )
 
 
-(defwidget _datetime []
+(defwidget Datetime []
   (eventbox
     :class `datetime {open_system-menu == true ? "open" : ""}`
     :onclick "scripts/newtoggle.sh calendar &"
     :cursor "pointer"
     (label
-      :text panel_clock
+      ; :text panel_clock
+      :text {formattime(EWW_TIME, "%a %d %b    %H:%M")}
     )
   )
 )
 
-(defwidget bar []
+
+(defwidget Network []
+  (box
+    (label
+      :style "font-size: 1.1em"
+      :text {
+      network.localIP == "" ? "󰯡" :
+      network.type =~ "ethernet" ? "󰈀" :
+      network.type =~ "wifi" && strength == "" ? "󰤭" :
+      network.type =~ "wifi" && strength < 26 ? "󰤟" :
+      network.type =~ "wifi" && strength < 51 ? "󰤢" :
+      network.type =~ "wifi" && strength < 76 ? "󰤥" :
+      "󰤨"}
+    )
+  )
+)
+
+
+(defwidget Bar []
   (centerbox
     :class "bar"
     (box
@@ -106,7 +122,7 @@
       :space-evenly false
       :spacing 30
       
-      (_menu)
+      (Menu)
       (eventbox
         :cursor "pointer"
         :onclick "scripts/newtoggle.sh mpris &"
@@ -117,16 +133,14 @@
             :style "font-size: 1.3em"
             :text "󰎈"
           )
-          (systray
-            
-          )
+          (systray)
         )
       )
     )
     (box
       :class "subbar"
       :halign "center"
-      (_workspaces)
+      (Workspaces)
     )
     (box
       :class "subbar"
@@ -142,22 +156,12 @@
         (box
           :space-evenly false
           :spacing 25
-          (_volume)
-          (label
-            :style "font-size: 1.1em"
-            :text {
-            network.localIP == "" ? "󰯡" :
-            network.type =~ "ethernet" ? "󰈀" :
-            network.type =~ "wifi" && strength == "" ? "󰤭" :
-            network.type =~ "wifi" && strength < 26 ? "󰤟" :
-            network.type =~ "wifi" && strength < 51 ? "󰤢" :
-            network.type =~ "wifi" && strength < 76 ? "󰤥" :
-            "󰤨"}
-          )
-          (_battery)
+          (Volume)
+          (Network)
+          (Battery)
         )
       )
-      (_datetime)
+      (Datetime)
     )
   )
 )

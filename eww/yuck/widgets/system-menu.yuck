@@ -8,7 +8,7 @@
       :onclick "pamixer -t"
       (box
         :class "sicon"
-        (_volume)
+        (Volume)
       )
     )
     (eventbox
@@ -69,23 +69,24 @@
       :thickness 7
       :clockwise false
       :tooltip tip
-      (overlay
-        (label
-          :xalign 0.5
-          :class "icon"
-          :text icon
-        )
+      (label
+        ; :xalign 0.5
+        ; :yalign 0.5
+        ; :class "icon"
+        :text icon
       )
     )
   )
 )
 
 (defwidget arrowbutton [action1 action2 icon css]
-  (centerbox
+  (box
+    :space-evenly false
     :class "arrowbutton ${css}"
     (eventbox
       :halign "center"
-      :class "eventbox"
+      :hexpand true
+      :class "eventbox first"
       :cursor "pointer"
       :onclick action1
       (label
@@ -98,7 +99,8 @@
     )
     (eventbox
       :halign "center"
-      :class "eventbox"
+      :hexpand true
+      :class "eventbox second"
       :cursor "pointer"
       :onclick action2
       (label
@@ -215,6 +217,7 @@
           :orientation "v"
           :hexpand true
           :spacing 20
+          :class "network-wrapper"
           
           (box
             :space-evenly false
@@ -249,19 +252,20 @@
               :hexpand true
               
               ; THIS IS UP TO 50 Mbps
-              ; (progress
-                ;   :value {
-                ;   "${round((EWW_NET.currentNetInterface.NET_UP / 2 * 8 / 1024 / 512),3)}"
-                ;   }
-              ; )
-              ; (label
-                ;   :class "text-light"
-                ;   :xalign 1
-                ;   :style "margin-right: .5em"
-                ;   :text {
-                ;   "${round((EWW_NET.currentNetInterface.NET_UP / 2 * 8 / 1024),3)}  kbps"
-                ;   }
-              ; )
+              (progress
+                :value {
+                "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024 / 512),3)}"
+                }
+              )
+              (label
+                :class "text-light"
+                :xalign 1
+                :style "margin-right: .5em"
+                :text {
+                ; "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024),3)}  kbps"
+                "${EWW_NET[network.interface].NET_UP}  kbps"
+                }
+              )
             )
           )
           (box
@@ -283,20 +287,21 @@
               :hexpand true
               
               ; THIS IS UP TO 100 Mbps
-              ; (progress
-                ;   :value {
-                ;   round((EWW_NET.currentNetInterface.NET_DOWN / 2 * 8 / 1024 / 1024),3)
-                ;   }
-              ; )
-              ; (label
-                ;   :class "text-light"
-                ;   :style "margin-right: .5em"
-                ;   :xalign 1
-                ;   :text currentNetInterface
-                ;   :text {
-                ;   "${round((EWW_NET.currentNetInterface.NET_DOWN / 2 * 8 / 1024),3)}  kbps"
-                ;   }
-              ; )
+              (progress
+                :value {
+                ; round((EWW_NET.currentNetInterface.NET_DOWN / 2 * 8 / 1024 / 1024),3)
+                round((EWW_NET[network.interface].NET_DOWN),3)
+                }
+              )
+              (label
+                :class "text-light"
+                :style "margin-right: .5em"
+                :xalign 1
+                :text {network.interface}
+                :text {
+                "${round((EWW_NET[network.interface].NET_DOWN),3)}  kbps"
+                }
+              )
             )
           )
         )

@@ -11,7 +11,8 @@ n=${#sinks[@]}
 echo "(box
         :orientation 'v'
         :space-evenly false
-        :spacing 20"
+        :spacing 20
+        :class 'sink-wrapper'"
 
 for ((index = 0; index < n; index++)); do
     sink="${sinks[index]}"

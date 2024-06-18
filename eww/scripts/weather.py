@@ -17,6 +17,6 @@ def print_weather(weather_data):
     temp = round(weather_data['main']['temp'], 1)
     print(f"{main_weather}  {temp}˚C")
 
-weather_data = get_weather('your-api-key', 'desired-lat', 'desired-lon')
+weather_data = get_weather('6f49735ca7c4f562dbd3984472be8b00', '49.114201', '17.726521')
 print_weather(weather_data)
 

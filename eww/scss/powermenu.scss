@@ -1,12 +1,12 @@
 .power-menu {
 
     .powerbutton {
-        background: $background-base-alpha;
+        background: $bg-base-alpha;
         border-radius: $rounded-large;
 
         &:hover {
-            background: $background-hover-alpha;
-            color: $text-accent;
+            // background: $background-hover-alpha;
+            // color: $text-accent;
         }
 
         min-width: 6.5em;

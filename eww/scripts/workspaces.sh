@@ -3,7 +3,6 @@
 n=7
 
 print() {
-    # Initialize an associative array
     declare -A array
 
     for ((i = 1; i <= n; i++)); do
@@ -21,7 +20,6 @@ print() {
         fi
     done
 
-    # Set the element at position activeWS to "1"
     array["$activeWS"]="1"
 
     # Construct a JSON array manually

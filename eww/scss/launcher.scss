@@ -1,0 +1,20 @@
+.launcher {
+    margin: 1em 2em;
+}
+
+.launcher-scroll {
+    min-height: 30em;
+    min-width: 30em;
+}
+
+
+.launcher-item {
+    color: $bg-accent;
+    padding: 0.5em;
+    border-radius: 1em;
+    transition: 0.3s;
+}
+
+.launcher-item:hover {
+    background-color: mix($bg-base, $bg-accent, 70%);
+}

@@ -1,7 +1,5 @@
 .menu-content {
-    border: 1px solid $text-inverse;
-    border-radius: $rounded-medium;
-    background: $background-base;
+    @include window;
 
     .menu-wrapper {
         min-width: 13.75em;
@@ -27,7 +25,7 @@
             .item {
 
                 &:hover {
-                    background: $background-inverse;
+                    background: $bg-accent;
                     border-radius: $rounded-medium;
                     color: $text-base;
                 }
