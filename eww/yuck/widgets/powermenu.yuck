@@ -13,37 +13,3 @@
     )
   )
 )
-
-(defwidget powermenu []
-  (box
-    :class "power-menu"
-    :space-evenly false
-    :spacing 15
-    :orientation "v"
-    (powerbutton
-      :action "poweroff"
-      :icon "shutdown"
-      :label "Shut Down"
-    )
-    (powerbutton
-      :action "reboot"
-      :icon "reboot"
-      :label "Restart"
-    )
-    (powerbutton
-      :action "systemctl suspend"
-      :icon "suspend"
-      :label "Sleep"
-    )
-    (powerbutton
-      :action "hyprctl dispatch exit"
-      :icon "logout"
-      :label "Logout"
-    )
-    (powerbutton
-      :action "hyprlock &"
-      :icon "lock"
-      :label "Lock"
-    )
-  )
-)

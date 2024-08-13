@@ -1,5 +1,5 @@
 .calendar {
-    @include window;
+    background: $bg-window;
     padding: 1em;
 
     color: $text-base;
@@ -24,7 +24,7 @@
             color: $text-inverse;
         }
 
-        font-size: 1.3em;
+        font-size: 1.2em;
         padding: .3em;
     }
 

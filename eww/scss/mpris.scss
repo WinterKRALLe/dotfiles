@@ -1,8 +1,6 @@
 .player-wrapper {
+    background: $bg-window;
     padding: 0 1em;
-    background: $bg-base-alpha;
-    border: 1px solid $border;
-    // border-radius: $rounded-large;
 
     .player-info {
         padding: 1em 0;

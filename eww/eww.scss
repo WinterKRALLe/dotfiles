@@ -1,4 +1,8 @@
-$icons: "/home/winter/.config/eww/icons/";
+$icons: "home/winter/.config/eww/icons/";
+@import "colors.scss";
+
+$bg-window: rgba($theme_bg_color, .4);
+$gradient: linear-gradient(to right, #F67E7D, #E1DD8F);
 
 $background-hover-alpha: rgba(#000, .5);
 $text-base: #ffffff;
@@ -26,29 +30,85 @@ $rounded-medium: 8px;
     min-width: 0;
 }
 
-@mixin window {
-    background: $bg-base-alpha;
-    border: 0.5px solid $border;
-}
-
-// .button {
-//     color: $text-base;
-//     border-radius: $rounded-large;
-//     transition: all 150ms ease-out;
-
-//     &:hover {
-//         background: $bg-base;
-//     }
-
-//     label {
-//         padding: .5em 1.5em;
-//     }
-// }
-
 .open {
     background: $bg-base;
     border-radius: $rounded-medium;
     padding: .25em 1em;
+}
+
+.accent {
+    color: $theme_selected_bg_color;
+}
+
+.accent-bg {
+    background: $theme_selected_bg_color;
+}
+
+.rounded-large {
+    border-radius: $rounded-large;
+}
+
+.base-bg {
+    background: $bg-base;
+}
+
+.py-1 {
+    padding: .25em 0;
+}
+
+.py-2 {
+    padding: .5em 0;
+}
+
+.p-4 {
+    padding: 1em;
+}
+
+.font-larger {
+    font-size: larger;
+}
+
+.font-times {
+    font-family: "good times", "ubuntu nerd font";
+    font-size: medium;
+}
+
+scale highlight {
+    background: $gradient;
+}
+
+scale trough {
+    background-color: rgba(#bae5ec, .3);
+    border-radius: 10px;
+    min-height: 12px;
+
+    highlight {
+        border-radius: 10px;
+    }
+}
+
+.min-w-7 {
+    min-width: 1.75em;
+}
+
+.min-w-10 {
+    min-width: 2.5em;
+}
+
+.min-w-12 {
+    min-width: 3em;
+}
+
+.min-w-16 {
+    min-width: 4em;
+}
+
+.min-h-16 {
+    min-height: 4em;
+}
+
+.text {
+    color: white;
 }
 
 @import "./scss/bar.scss";

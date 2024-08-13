@@ -18,3 +18,23 @@
 .launcher-item:hover {
     background-color: mix($bg-base, $bg-accent, 70%);
 }
+
+
+.wifi_window {
+    background: $bg-window;
+    color: #bae5ec;
+    padding: .25em 2em;
+}
+
+// .wifi_window {
+//     background-color: #1e1e2e;
+//     color: #cdd6f4;
+//     padding: 10px;
+//     border-radius: 10px;
+
+//     label {
+//         font-family: "JetBrainsMono Nerd Font";
+//         font-size: 14px;
+//         padding: 5px 0;
+//     }
+// }

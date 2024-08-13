@@ -23,6 +23,7 @@
 (defpoll    strength    :interval   "60s"   `nmcli -f IN-USE,SIGNAL device wifi | grep '*' | awk '{ print $2 }'`)
 (deflisten  network     :initial    "{}"    `scripts/network.sh`)
 
+(defpoll wifi_list :interval "30s" `scripts/netNetwork.sh`)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        MUSIC       ;;
@@ -34,7 +35,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     MICROPHONE     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll mic :interval "1s" `pamixer --default-source --get-mute` )
+(defpoll mic :interval "1s" `pamixer --default-source --get-mute`)
+(deflisten mics :initial "{}" `scripts/microphone.sh`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -53,7 +55,7 @@
 ;;     BRIGHTNESS     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (deflisten brightness :initial "" `scripts/brightness.sh`)
-; (defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
+(defpoll brightnessP :interval "1s" `brightnessctl i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//'`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -65,7 +67,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        SINKS       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defpoll sinks :interval "1s" `scripts/sinks.sh`)
+(deflisten sinks :initial "{}" `scripts/sinks.sh`)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -80,6 +82,11 @@
 (deflisten apps :initial "{}" `go run scripts/launcher.go`)
 (defvar ANIM_DURATION "500ms")
 (defvar open_launcher false)
+
+
+
+(deflisten notifications :initial '{"count": 0, "notifications": [], "popups": []}'
+"scripts/notifications.sh current")
 
 
 (defvar open_about false)

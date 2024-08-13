@@ -1,12 +1,147 @@
-(defwindow system-menu
-  :stacking "fg"
-  :geometry (geometry :width "2px" :height "2px" :anchor "top right" :x "1%" :y "1%")
-  (_system-menu)
-)
-
 (defwindow system-menu-closer
   :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
   :focusable false
   :namespace "fromEWW"
   (closer :window "system-menu"))
+
+(defwindow system-menu
+  :stacking "fg"
+  :geometry (geometry :width "2px" :height "100%" :anchor "top right")
+  (revealer
+    :transition "slideleft"
+    :reveal open_system-menu
+    (box
+      :class "system"
+      :space-evenly false
+      :orientation "v"
+      :spacing 15
+      
+      (box
+        :space-evenly false
+        :spacing 10
+        :orientation "v"
+        :class "muted"
+        (label
+          :text "Volume"
+          :xalign 0
+          :class "accent font-times"
+        )
+        (slider_volume)
+        (slider_brightness)
+      )
+      
+      (box
+        :space-evenly true
+        :spacing 30
+        :class "muted"
+        ; Wi-Fi
+        (arrowbutton
+          :action1 {
+          network.wifiStatus == "enabled" ?
+          "nmcli r wifi off" :
+          "nmcli r wifi on"}
+          :action2 "nm-connection-editor &"
+          :icon {
+          network.localIP == "" ? "󰯡" :
+          network.type =~ "ethernet" ? "󰈀" :
+          network.type =~ "wifi" && strength == "" ? "󰤭" :
+          network.type =~ "wifi" && strength < 26 ? "󰤟" :
+          network.type =~ "wifi" && strength < 51 ? "󰤢" :
+          network.type =~ "wifi" && strength < 76 ? "󰤥" :
+          "󰤨"}
+          :css {
+          network.wifiStatus == "disabled" ?
+          "wifi" : "wifi active"
+          }
+        )
+        ; Bluetooth
+        (arrowbutton
+          :action1 {
+          bluetoothstatus == "yes" ?
+          "bluetoothctl power off" :
+          "bluetoothctl power on"}
+          :action2 "blueberry"
+          :icon {bluetoothstatus == "yes" ? "󰂯" : "󰂲" }
+          :css {
+          bluetoothstatus == "no" ?
+          "blue" : "blue active"
+          }
+        )
+        ; Microphone
+        (arrowbutton
+          :action1 "pamixer --default-source -t"
+          :action2 "pavucontrol &"
+          :icon {mic == true ? "󰍭" : "󰍬"}
+          :css {
+          mic == true ?
+          "mic" : "mic active"
+          }
+        )
+      )
+      (box
+        :orientation "h"
+        :class "muted"
+        
+        (sysprogress
+          :css "cpu"
+          :tip "CPU ${round(EWW_CPU.avg,0)}%"
+          :data {EWW_CPU.avg}
+          :icon ""
+        )
+        (sysprogress
+          :css "ram"
+          :tip "RAM ${round(EWW_RAM.used_mem / EWW_RAM.total_mem * 100, 0)}%"
+          :data {EWW_RAM.used_mem / EWW_RAM.total_mem * 100}
+          :icon ""
+        )
+        (sysprogress
+          :css "temp"
+          :tip "Temperature ${EWW_TEMPS["ACPITZ_TEMP1"]}°C"
+          :data {EWW_TEMPS["ACPITZ_TEMP1"]}
+          :icon "󰈸"
+        )
+        (sysprogress
+          :css "battery ${battery.state}"
+          :tip "Battery ${battery.capacity}%"
+          :data "${battery.capacity}"
+          :icon {battery.state == "Charging" ? "󰂄" : "󰁹"}
+        )
+      )
+      (box
+        :orientation "v"
+        :space-evenly false
+        :spacing 10
+        :class "base-bg rounded-large p-4"
+        (label
+          :text "Playback Devices"
+          :class "accent font-times"
+          :xalign 0
+        )
+        (sinks)
+      )
+      (box
+        :orientation "v"
+        :space-evenly false
+        :spacing 10
+        :class "base-bg rounded-large p-4"
+        (label
+          :text "Input Devices"
+          :class "accent font-times"
+          :xalign 0
+        )
+        (mics)
+      )
+      (box
+        :orientation "v"
+        :hexpand true
+        :spacing 20
+        :class "network-wrapper"
+        
+        (network_ip)
+        (network_upload)
+        (network_download)
+      )
+    )
+  )
+)

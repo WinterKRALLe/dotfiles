@@ -4,7 +4,11 @@
     :x "0.8%"
     :y "0.4%"
   :anchor "top right")
-  (calendar)
+  (eventbox
+    :class "calendar"
+    ; :onhoverlost "scripts/newtoggle.sh calendar &"
+    (calendar)
+  )
 )
 
 (defwindow calendar-closer

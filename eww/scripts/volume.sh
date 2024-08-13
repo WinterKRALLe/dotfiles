@@ -13,6 +13,6 @@ print() {
 
 print
 
-pactl subscribe | grep --line-buffered "on sink" | while read -r _; do
+pactl subscribe | grep --line-buffered -e "on sink" -e "on server" | while read -r _; do
   print
 done

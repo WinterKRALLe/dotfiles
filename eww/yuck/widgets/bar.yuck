@@ -12,6 +12,23 @@
   )
 )
 
+
+(defwidget Music []
+  (eventbox
+    :cursor "pointer"
+    :onclick "scripts/newtoggle.sh mpris &"
+    (box
+      :space-evenly false
+      :spacing 30
+      (label
+        :style "font-size: 1.3em"
+        :text "󰎈"
+      )
+    )
+  )
+)
+
+
 (defwidget Workspaces []
   (eventbox
     :cursor "pointer"
@@ -45,10 +62,10 @@
   )
 )
 
+
 (defwidget Battery []
   (box
-    :class "battery"
-    (label :text "${battery.capacity}%" :style "margin-right: 0.1em")
+    (label :text "${battery.capacity}%")
     (image :path {
       battery.state == "charging" ? "./icons/battery-charging.svg" :
       battery.capacity < 10 ? "./icons/battery-empty-fill.svg" :
@@ -60,13 +77,13 @@
   )
 )
 
-(defwidget Microphone []
-  (box :class "microphone" :style "padding-left: 1em" :space-evenly false :orientation "h" :spacing 3
-    (button :onclick "pamixer --default-source -t"
-      (label :style "font-size: 1.4em" :text {mic == true ? "󰍭" : "󰍬"})
-    )
-  )
-)
+
+; (defwidget Microphone []
+  ;   (box :class "microphone" :style "padding-left: 1em" :space-evenly false :orientation "h" :spacing 3
+    ;     (label :style "font-size: 1em" :text {mic == true ? "󰍭" : "󰍬"})
+  ;   )
+; )
+
 
 (defwidget Volume []
   (box
@@ -89,7 +106,6 @@
     :onclick "scripts/newtoggle.sh calendar &"
     :cursor "pointer"
     (label
-      ; :text panel_clock
       :text {formattime(EWW_TIME, "%a %d %b    %H:%M")}
     )
   )
@@ -97,71 +113,15 @@
 
 
 (defwidget Network []
-  (box
-    (label
-      :style "font-size: 1.1em"
-      :text {
-      network.localIP == "" ? "󰯡" :
-      network.type =~ "ethernet" ? "󰈀" :
-      network.type =~ "wifi" && strength == "" ? "󰤭" :
-      network.type =~ "wifi" && strength < 26 ? "󰤟" :
-      network.type =~ "wifi" && strength < 51 ? "󰤢" :
-      network.type =~ "wifi" && strength < 76 ? "󰤥" :
-      "󰤨"}
-    )
-  )
-)
-
-
-(defwidget Bar []
-  (centerbox
-    :class "bar"
-    (box
-      :class "subbar"
-      :halign "start"
-      :space-evenly false
-      :spacing 30
-      
-      (Menu)
-      (eventbox
-        :cursor "pointer"
-        :onclick "scripts/newtoggle.sh mpris &"
-        (box
-          :space-evenly false
-          :spacing 30
-          (label
-            :style "font-size: 1.3em"
-            :text "󰎈"
-          )
-          (systray)
-        )
-      )
-    )
-    (box
-      :class "subbar"
-      :halign "center"
-      (Workspaces)
-    )
-    (box
-      :class "subbar"
-      :halign "end"
-      :space-evenly false
-      :spacing 20
-      
-      (eventbox
-        :cursor "pointer"
-        :onclick "scripts/newtoggle.sh system-menu &"
-        :class {open_system-menu == true ? "open" : ""}
-        
-        (box
-          :space-evenly false
-          :spacing 25
-          (Volume)
-          (Network)
-          (Battery)
-        )
-      )
-      (Datetime)
-    )
+  (label
+    :style "font-size: 1.1em"
+    :text {
+    network.localIP == "" ? "󰯡" :
+    network.type =~ "ethernet" ? "󰈀" :
+    network.type =~ "wifi" && strength == "" ? "󰤭" :
+    network.type =~ "wifi" && strength < 26 ? "󰤟" :
+    network.type =~ "wifi" && strength < 51 ? "󰤢" :
+    network.type =~ "wifi" && strength < 76 ? "󰤥" :
+    "󰤨"}
   )
 )

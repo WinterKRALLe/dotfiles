@@ -1,4 +1,4 @@
-(defwidget sysslider_volume []
+(defwidget slider_volume []
   (box
     :space-evenly false
     :spacing 15
@@ -6,10 +6,14 @@
     (eventbox
       :cursor "pointer"
       :onclick "pamixer -t"
-      (box
-        :class "sicon"
-        (Volume)
-      )
+      (label
+        :class "font-larger min-w-7"
+        :text {
+        volume.state == "true" ? "󰝟" :
+        volume.level < "35" ? "󰕿" :
+        volume.level < "70" ? "󰖀" :
+        "󰕾"
+      })
     )
     (eventbox
       :cursor "pointer"
@@ -21,25 +25,26 @@
         :onchange "pamixer --set-volume {}"
       )
     )
-    ; (label
-      ;   :class "val"
-      ;   :xalign 1
-      ;   :text "${volume.level}%"
-    ; )
+    (label
+      :class "font-times min-w-12"
+      :xalign 1
+      :text "${volume.level}%"
+    )
   )
 )
-(defwidget sysslider_brightness []
+
+
+(defwidget slider_brightness []
   (box
     :space-evenly false
     :spacing 15
     :class "sysslider brightness"
-    (box
-      :class "sicon"
-      (label
-        :text {
-        brightness < 124 ? "󱩎" :
-        brightness < 250 ? "󱩒" : "󰛨"
-      })
+    (label
+      :text {
+      brightness < 124 ? "󱩎" :
+      brightness < 250 ? "󱩒" : "󰛨"
+      }
+      :class "font-larger min-w-7"
     )
     (eventbox
       :cursor "pointer"
@@ -51,17 +56,18 @@
         :onchange "brightnessctl s {}"
       )
     )
-    ; (label
-      ;   :class "pval val"
-      ;   :xalign 1
-    ; :text "${brightnessP}")
+    (label
+      :class "font-times min-w-12"
+      :xalign 1
+      :text "${brightnessP}"
+    )
   )
 )
 
 
 (defwidget sysprogress [data css tip icon]
   (box
-    :class "sys ${css}"
+    :class "sys min-w-16 min-h-16 ${css}"
     (circular-progress
       :class "prog ${css}"
       :value data
@@ -69,10 +75,11 @@
       :thickness 7
       :clockwise false
       :tooltip tip
+      
       (label
-        ; :xalign 0.5
-        ; :yalign 0.5
-        ; :class "icon"
+        :xalign 0.5
+        :yalign 0.5
+        :class "text font-larger"
         :text icon
       )
     )
@@ -111,200 +118,133 @@
   )
 )
 
+(defwidget mics[]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 20
+    :class "sink-wrapper"
+    (for mic in {mics.count}
+      (eventbox
+        :cursor "pointer"
+        :onclick "pactl set-default-source ${mics.switches[mic - 1]}"
+        :class "${mics.switches[mic - 1] == mics.active ? 'sink accent-bg' : 'sink'}"
+        (label
+          :text {mics.names[mic - 1]}
+          :xalign 0
+        )
+      )
+    )
+  )
+)
 
-(defwidget _system-menu []
-  (revealer
-    :transition "slideleft"
-    :reveal open_system-menu
-    (eventbox
-      :class "event-sys"
-      (box
-        :class "system"
-        :space-evenly false
-        :orientation "v"
-        :spacing 15
-        
-        (box
-          :space-evenly false
-          :spacing 10
-          :orientation "v"
-          :class "muted"
-          (sysslider_volume)
-          (sysslider_brightness)
+(defwidget sinks[]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 20
+    :class "sink-wrapper"
+    (for sink in {sinks.count}
+      (eventbox
+        :cursor "pointer"
+        :onclick "pactl set-default-sink ${sinks.switches[sink - 1]}"
+        :class "${sinks.switches[sink - 1] == sinks.active ? 'sink accent-bg' : 'sink'}"
+        (label
+          :text {sinks.names[sink - 1]}
+          :xalign 0
         )
-        (box
-          :space-evenly true
-          :spacing 30
-          :class "muted"
-          ; Wi-Fi
-          (arrowbutton
-            :action1 {
-            network.wifiStatus == "enabled" ?
-            "nmcli r wifi off" :
-            "nmcli r wifi on"}
-            :action2 "nm-connection-editor &"
-            :icon  {
-            network.type =~ "ethernet" ? "󰈀" :
-            network.type =~ "wifi" && strength == "" ? "󰤭" :
-            network.type =~ "wifi" && strength < 26 ? "󰤟" :
-            network.type =~ "wifi" && strength < 51 ? "󰤢" :
-            network.type =~ "wifi" && strength < 76 ? "󰤥" :
-            "󰤨"}
-            :css {
-            network.wifiStatus == "disabled" ?
-            "wifi" : "wifi active"
-            }
-          )
-          ; Bluetooth
-          (arrowbutton
-            :action1 {
-            bluetoothstatus == "yes" ?
-            "bluetoothctl power off" :
-            "bluetoothctl power on"}
-            :action2 "blueberry"
-            :icon {bluetoothstatus == "yes" ? "󰂯" : "󰂲" }
-            :css {
-            bluetoothstatus == "no" ?
-            "blue" : "blue active"
-            }
-          )
-          ; Microphone
-          (arrowbutton
-            :action1 "pamixer --default-source -t"
-            :action2 "pavucontrol &"
-            :icon {mic == true ? "󰍭" : "󰍬"}
-            :css {
-            mic == true ?
-            "mic" : "mic active"
-            }
-          )
-        )
-        (box
-          :orientation "h"
-          :class "syslevels muted"
-          
-          (sysprogress
-            :css "cpu"
-            :tip "CPU ${round(EWW_CPU.avg,0)}%"
-            :data {EWW_CPU.avg}
-            :icon ""
-          )
-          (sysprogress
-            :css "ram"
-            :tip "RAM ${round(EWW_RAM.used_mem / EWW_RAM.total_mem * 100, 0)}%"
-            :data {EWW_RAM.used_mem / EWW_RAM.total_mem * 100}
-            :icon ""
-          )
-          (sysprogress
-            :css "temp"
-            :tip "Temperature ${EWW_TEMPS["ACPITZ_TEMP1"]}°C"
-            :data {EWW_TEMPS["ACPITZ_TEMP1"]}
-            :icon "󰈸"
-          )
-          (sysprogress
-            :css "battery ${battery.state}"
-            :tip "Battery ${battery.capacity}%"
-            :data "${battery.capacity}"
-            :icon {battery.state == "Charging" ? "󰂄" : "󰁹"}
-          )
-        )
-        (box
-          (literal
-            :content sinks
-          )
-        )
-        (box
-          :orientation "v"
-          :hexpand true
-          :spacing 20
-          :class "network-wrapper"
-          
-          (box
-            :space-evenly false
-            :spacing 15
-            
-            (label
-              :class "text-light"
-              :style "font-size: 1.3em"
-              :text "󰀂"
-            )
-            (label
-              :class "text-light"
-              :text "${network.localIP}"
-            )
-          )
-          (box
-            :space-evenly false
-            :spacing 15
-            :valign "center"
-            
-            (label
-              :class "dark"
-              :text "󰞙"
-              :style "font-size: 1.4em"
-            )
-            (box
-              :valign "center"
-              :class "scales"
-              :orientation "v"
-              :space-evenly false
-              :spacing 5
-              :hexpand true
-              
-              ; THIS IS UP TO 50 Mbps
-              (progress
-                :value {
-                "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024 / 512),3)}"
-                }
-              )
-              (label
-                :class "text-light"
-                :xalign 1
-                :style "margin-right: .5em"
-                :text {
-                ; "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024),3)}  kbps"
-                "${EWW_NET[network.interface].NET_UP}  kbps"
-                }
-              )
-            )
-          )
-          (box
-            :space-evenly false
-            :spacing 15
-            :valign "center"
-            
-            (label
-              :class "dark"
-              :text "󰞒"
-              :style "font-size: 1.4em"
-            )
-            (box
-              :valign "center"
-              :class "scales"
-              :orientation "v"
-              :space-evenly false
-              :spacing 5
-              :hexpand true
-              
-              ; THIS IS UP TO 100 Mbps
-              (progress
-                :value {
-                ; round((EWW_NET.currentNetInterface.NET_DOWN / 2 * 8 / 1024 / 1024),3)
-                round((EWW_NET[network.interface].NET_DOWN),3)
-                }
-              )
-              (label
-                :class "text-light"
-                :style "margin-right: .5em"
-                :xalign 1
-                :text {network.interface}
-                :text {
-                "${round((EWW_NET[network.interface].NET_DOWN),3)}  kbps"
-                }
-              )
-            )
-          )
-        )
+      )
+    )
+  )
+)
+
+(defwidget network_ip[]
+  (box
+    :space-evenly false
+    :spacing 15
+    
+    (label
+      :class "text-light"
+      :style "font-size: 1.3em"
+      :text "󰀂"
+    )
+    (label
+      :class "text-light"
+      :text "${network.localIP}"
+    )
+  )
+)
+
+(defwidget network_upload[]
+  (box
+    :space-evenly false
+    :spacing 15
+    :valign "center"
+    
+    (label
+      :text "󰞙"
+      :style "font-size: 1.4em"
+    )
+    (box
+      :valign "center"
+      :class "scales"
+      :orientation "v"
+      :space-evenly false
+      :spacing 5
+      :hexpand true
+      
+      ; THIS IS UP TO 50 Mbps
+      (progress
+        :value {
+        "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024 / 512),3)}"
+        }
+      )
+      (label
+        :class "text-light"
+        :xalign 1
+        :style "margin-right: .5em"
+        :text {
+        ; "${round((EWW_NET[network.interface].NET_UP / 2 * 8 / 1024),3)}  kbps"
+        "${round(EWW_NET[network.interface].NET_UP, 3)}  kbps"
+        }
+      )
+    )
+  )
+)
+
+(defwidget network_download[]
+  (box
+    :space-evenly false
+    :spacing 15
+    :valign "center"
+    
+    (label
+      :text "󰞒"
+      :style "font-size: 1.4em"
+    )
+    (box
+      :valign "center"
+      :class "scales"
+      :orientation "v"
+      :space-evenly false
+      :spacing 5
+      :hexpand true
+      
+      ; THIS IS UP TO 100 Mbps
+      (progress
+        :value {
+        ; round((EWW_NET.currentNetInterface.NET_DOWN / 2 * 8 / 1024 / 1024),3)
+        round((EWW_NET[network.interface].NET_DOWN),3)
+        }
+      )
+      (label
+        :class "text-light"
+        :style "margin-right: .5em"
+        :xalign 1
+        :text {network.interface}
+        :text {
+        "${round((EWW_NET[network.interface].NET_DOWN),3)}  kbps"
+        }
       )
     )
   )

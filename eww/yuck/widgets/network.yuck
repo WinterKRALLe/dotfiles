@@ -1,0 +1,75 @@
+(defwidget wifi_widget []
+  (box :orientation "vertical"
+    :space-evenly false
+    :spacing 10
+    (box
+      :space-evenly false
+      :hexpand true
+      
+      (label
+        :class "accent font-times font-larger"
+        :xalign 0
+        :text "Wi-Fi"
+      )
+      (eventbox
+        :style "background: red; padding: 0 5em"
+        :cursor "pointer"
+        :onclick "scripts/netNetwork.sh &"
+        
+        (label
+          :xalign 1
+          :hexpand true
+          :class "accent font-times font-larger"
+          :text "󰑓"
+        )
+      )
+    )
+    (for entry in {wifi_list.available_wifi_count}
+      (box
+        :space-evenly false
+        :spacing 15
+        :class {(wifi_list.currentSsid == wifi_list.ssid[entry - 1]) && (wifi_list.currentStandard == wifi_list.standards[entry - 1]) ? "accent" : ""}
+        (overlay
+          (label
+            :style "font-size: 1.1em"
+            :text {
+            wifi_list.signals[entry - 1] < 26 ? "󰤟" :
+            wifi_list.signals[entry - 1] < 51 ? "󰤢" :
+            wifi_list.signals[entry - 1] < 76 ? "󰤥" :
+            "󰤨"}
+            
+          )
+          (label :text {wifi_list.standards[entry - 1]} :style "font-size: 0.5em; margin: 1.5em 1em 0 0")
+        )
+        (label
+          :text {wifi_list.ssid[entry - 1]}
+        )
+        (eventbox
+          :visible {(wifi_list.currentSsid == wifi_list.ssid[entry - 1]) && (wifi_list.currentStandard == wifi_list.standards[entry - 1]) ? true : false}
+          :cursor "pointer"
+          :onclick "nmcli c down id ${wifi_list.ssid[entry - 1]}"
+          (label :text "Disconnect")
+        )
+        (eventbox
+          :visible {(wifi_list.currentSsid == wifi_list.ssid[entry - 1]) && (wifi_list.currentStandard == wifi_list.standards[entry - 1]) ? false : true}
+          :cursor "pointer"
+          :onclick "nmcli c up id ${wifi_list.ssid[entry - 1]}"
+          (label :text "Connect")
+        )
+      )
+    )
+  )
+)
+
+(defwindow wifi_window
+  :monitor 0
+  :geometry (geometry :x "0%"
+    :y "0%"
+    :width "20%"
+    :height "20%"
+  :anchor "top right")
+  :stacking "fg"
+  :reserve (struts :distance "40px" :side "top")
+  :windowtype "dock"
+  :wm-ignore false
+  (wifi_widget))

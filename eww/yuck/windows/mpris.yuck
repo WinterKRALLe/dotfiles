@@ -1,12 +1,80 @@
-(defwindow mpris
-  :stacking "fg"
-  :geometry (geometry :width "2px" :height "2px" :x "0.8%" :y "1%" :anchor "top left")
-  (_mpris)
-)
-
 (defwindow mpris-closer
   :geometry (geometry :width "100%" :height "110%")
   :stacking "fg"
   :focusable false
   :namespace "fromEWW"
   (closer :window "mpris"))
+
+
+(defwindow mpris
+  :stacking "fg"
+  :geometry (geometry :width "2px" :height "2px" :x "0.8%" :y "1%" :anchor "top left")
+  (revealer
+    :transition "slideright"
+    :reveal open_mpris
+    
+    (eventbox
+      :width { music == "No players found" || music == "[]" ? 0 : 400 }
+      (box
+        :orientation "v"
+        :valign "start"
+        :space-evenly false
+        :class "player-wrapper"
+        
+        (label
+          :visible { music == "No players found" || music == "[]" }
+          :text "No players found"
+          :class "player-info"
+        )
+        (box
+          :orientation "v"
+          :space-evenly false
+          :valign "start"
+          :visible { music != "No players found" && music != "[]" }
+          
+          (for i in players
+            
+            (box
+              :orientation "h"
+              :space-evenly false
+              :spacing 20
+              :class "player"
+              :hexpand true
+              
+              (art
+                :artUrl {music[i - 1].artUrl}
+              )
+              
+              (box
+                :orientation "v"
+                :hexpand true
+                
+                (caption :label {music[i - 1].artist})
+                (caption :label {music[i - 1].title})
+                
+                (box
+                  :hexpand true
+                  
+                  (player_button
+                    :action "playerctl --player=${music[i - 1].name} previous"
+                    :icon "󰙤"
+                  )
+                  (player_button
+                    :action "playerctl --player=${music[i - 1].name} play-pause"
+                    :icon {
+                    music[i - 1].status == "Playing" ? "󰏦" : "󰐍"
+                    }
+                  )
+                  (player_button
+                    :action "playerctl --player=${music[i - 1].name} next"
+                    :icon "󰙢"
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)

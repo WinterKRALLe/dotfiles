@@ -1,9 +1,7 @@
-.menu-content {
-    @include window;
-
     .menu-wrapper {
+        background: $bg-window;
         min-width: 13.75em;
-        margin: 0 .5em;
+        padding: 0 .5em;
 
         .separator {
             background: $text-inverse;
@@ -37,4 +35,3 @@
             }
         }
     }
-}

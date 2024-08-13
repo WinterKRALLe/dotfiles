@@ -1,5 +1,5 @@
 .system {
-    @include window;
+    background: $bg-window;
     padding: 1em;
 
     .muted {
@@ -8,36 +8,11 @@
         border-radius: $rounded-large;
     }
 
-    .syslevels {
-        padding: 1em 0;
-
-        box {
-            min-width: 4em;
-            min-height: 4em;
-
-            label {
-                font-size: 1.4em;
-            }
-        }
-    }
-}
-
-.volume {
-    .sicon {
-        color: #73DACA;
-    }
-}
-
-.brightness {
-    .sicon {
-        color: #E0AF68;
-    }
 }
 
 
 
 .sys .prog {
-
 
     &.cpu {
         color: #73DACA;
@@ -55,54 +30,14 @@
         color: #7AA2F7;
     }
 
-    background: $bg-secondary;
+    background: rgba(#bae5ec, .3);
 
-
-    label {
-        color: $text-base;
-    }
 }
 
-.sysslider {
-
-    scale trough {
-        background-color: $bg-secondary;
-        border-radius: 10px;
-        min-height: 14px;
-
-        highlight {
-            border-radius: 10px;
-        }
-    }
-}
-
-.volume scale trough highlight {
-    background: #73DACA;
-}
-
-.brightness scale trough highlight {
-    background: #E0AF68;
-}
-
-.sicon {
-    min-width: 30px;
-
-    label {
-        font-size: 1.3em;
-    }
-}
-
-.pval {
-    font-size: 1.4em;
-}
-
-.val {
-    min-width: 55px;
-}
 
 
 .arrowbutton {
-    background: $bg-secondary;
+    background: rgba(#bae5ec, .3);
     border-radius: $rounded-full;
 
     &.wifi.active {
@@ -133,22 +68,16 @@
     }
 }
 
-.sink-wrapper {
-    padding: 1em;
+.sink {
     border-radius: $rounded-large;
-    background: $bg-base;
+    background: $bg-secondary;
 
-    .sink {
-        border-radius: $rounded-large;
-        background: $bg-secondary;
+    &.accent-bg {
+        background-color: $theme_selected_bg_color;
+    }
 
-        label {
-            padding: .5em 1em;
-        }
-
-        &.running {
-            background-color: #BB9AF7;
-        }
+    label {
+        padding: .5em 1em;
     }
 }
 

@@ -1,88 +1,28 @@
-(defwidget _mpris []
-  (revealer
-    :transition "slideright"
-    :reveal open_mpris
-    
-    (eventbox
-      :width { music == "No players found" || music == "[]" ? 0 : 400 }
-      (box
-        :orientation "v"
-        :valign "start"
-        :space-evenly false
-        :class "player-wrapper"
-        
-        (label
-          :visible { music == "No players found" || music == "[]" }
-          :text "No players found"
-          :class "player-info"
-        )
-        (box
-          :orientation "v"
-          :space-evenly false
-          :valign "start"
-          :visible { music != "No players found" && music != "[]" }
-          
-          (for i in players
-            
-            (box
-              :orientation "h"
-              :space-evenly false
-              :spacing 20
-              :class "player"
-              :hexpand true
-              (box
-                :space-evenly false
-                :width 100
-                :height 100
-                :style "
-                background-image: url('${music[i - 1].artUrl}');
-                background-size: cover; background-repeat: no-repeat; background-position: center;"
-              )
-              (box
-                :orientation "v"
-                :hexpand true
-                (label
-                  :limit-width 20
-                :text {music[i - 1].artist})
-                (label
-                  :limit-width 20
-                :text {music[i - 1].title})
-                (box
-                  :hexpand true
-                  (eventbox
-                    :cursor "pointer"
-                    :onclick "playerctl --player=${music[i - 1].name} previous"
-                    (label
-                      :style "font-size: 1.4em;"
-                      :text "󰙤"
-                    )
-                  )
-                  (eventbox
-                    :cursor "pointer"
-                    :onclick "playerctl --player=${music[i - 1].name} play-pause"
-                    :class "music-btn"
-                    (label
-                      :style "font-size: 1.4em;"
-                      :text {
-                      music[i - 1].status == "Playing" ? "󰏦" : "󰐍"
-                      }
-                    )
-                  )
-                  (eventbox
-                    :cursor "pointer"
-                    :onclick "playerctl --player=${music[i - 1].name} next"
-                    :class "music-btn"
-                    (label
-                      :style "font-size: 1.4em;"
-                      :text "󰙢"
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
+(defwidget player_button [action icon]
+  (eventbox
+    :cursor "pointer"
+    :onclick action
+    (label
+      :style "font-size: 1.4em;"
+      :text icon
     )
+  )
+)
+
+(defwidget caption [label]
+  (label
+    :limit-width 20
+    :text label
+  )
+)
+
+(defwidget art [artUrl]
+  (box
+    :space-evenly false
+    :width 100
+    :height 100
+    :style "
+    background-image: url('${artUrl}');
+    background-size: cover; background-repeat: no-repeat; background-position: center;"
   )
 )
