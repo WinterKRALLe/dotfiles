@@ -1,0 +1,29 @@
+if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+    exec Hyprland
+fi
+
+autoload -U compinit && compinit
+
+zstyle ':completion:*' completer_expand_complete
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' max-errors 10
+zstyle :compinstall filename '/home/winter/.zshrc'
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+bindkey '\e[3~' delete-char
+
+PS1='%~ ❯ '
+
+export PATH="$PATH:$HOME/.dotnet/tools"
+
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias py='python'
