@@ -3,20 +3,17 @@
   :stacking "fg"
   :focusable false
   :namespace "fromEWW"
-  (closer :window "menu"))
+  (revealer-closer :window "menu"))
 
 
 (defwindow menu
-  :stacking "fg"
+  :stacking "overlay"
   :geometry (geometry
     :anchor "top left"
-    :x "1%"
-    :y "1%"
   )
-  (eventbox
-    :cursor "pointer"
-    :onclick "scripts/newtoggle.sh menu &"
-    :class {open_menu == true ? "open" : ""}
+  (revealer
+    :transition "slideright"
+    :reveal open_menu
     
     (box
       :orientation "v"

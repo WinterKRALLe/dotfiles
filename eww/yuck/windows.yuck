@@ -5,3 +5,4 @@
 (include "./yuck/windows/calendar.yuck")
 (include "./yuck/windows/mpris.yuck")
 (include "./yuck/windows/launcher.yuck")
+(include "./yuck/windows/wallpaper.yuck")

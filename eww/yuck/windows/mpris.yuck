@@ -3,18 +3,17 @@
   :stacking "fg"
   :focusable false
   :namespace "fromEWW"
-  (closer :window "mpris"))
+  (revealer-closer :window "mpris"))
 
 
 (defwindow mpris
-  :stacking "fg"
-  :geometry (geometry :width "2px" :height "2px" :x "0.8%" :y "1%" :anchor "top left")
+  :stacking "overlay"
+  :geometry (geometry :anchor "top left")
   (revealer
-    :transition "slideright"
+    :transition "slidedown"
     :reveal open_mpris
     
     (eventbox
-      :width { music == "No players found" || music == "[]" ? 0 : 400 }
       (box
         :orientation "v"
         :valign "start"

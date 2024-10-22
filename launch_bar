@@ -4,21 +4,21 @@
 
 if [[ ! $(pidof eww) ]]; then
 	eww daemon
-	sleep 1
+	sleep 2
 fi
 
 monitors=($(hyprctl monitors -j | jq -r '.[] | .id'))
 for i in "${!monitors[@]}"; do
     # Use unique IDs for each bar by appending monitor ID
     bar_id="b${monitors[$i]}"
+    menu_id="menu${monitors[$i]}"
+    mpris_id="mpris${monitors[$i]}"
+    calendar_id="calendar${monitors[$i]}"
+    wallpaper_id="wallpaper${monitors[$i]}"
     # Open the bar for each monitor with a unique ID
     eww open --screen $i bar --id $bar_id
+    eww open --screen $i menu --id $menu_id
+    eww open --screen $i mpris --id $mpris_id
+    eww open --screen $i calendar --id $calendar_id
+    eww open --screen $i wallpaper --id $wallpaper_id
 done
-
-
-#monitors=($(hyprctl monitors -j | jq -r '.[] | .id'))
-#for i in "${!monitors[@]}"; do
-#	eww open --screen $i powermenu --id p$i
-#	eww open --screen $i bar --id b$i
-#	eww open --screen $i weather --id w$i
-#done

@@ -1,7 +1,7 @@
 (defwidget Menu []
   (eventbox
     :cursor "pointer"
-    :onclick "scripts/newtoggle.sh menu &"
+    :onclick "scripts/revealer.sh menu &"
     :class "menu"
     (box
       (image
@@ -16,7 +16,7 @@
 (defwidget Music []
   (eventbox
     :cursor "pointer"
-    :onclick "scripts/newtoggle.sh mpris &"
+    :onclick "scripts/revealer.sh mpris &"
     (box
       :space-evenly false
       :spacing 30
@@ -103,7 +103,7 @@
 (defwidget Datetime []
   (eventbox
     :class `datetime {open_system-menu == true ? "open" : ""}`
-    :onclick "scripts/newtoggle.sh calendar &"
+    :onclick "scripts/revealer.sh calendar &"
     :cursor "pointer"
     (label
       :text {formattime(EWW_TIME, "%a %d %b    %H:%M")}

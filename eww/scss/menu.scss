@@ -1,37 +1,41 @@
-    .menu-wrapper {
-        background: $bg-window;
-        min-width: 13.75em;
-        padding: 0 .5em;
+   .menu-wrapper {
+       background: $bg-window;
+       min-width: 13.75em;
+       padding: 0 .5em;
 
-        .separator {
-            background: $text-inverse;
-            margin: 0 .5em;
-        }
+       &.close {
+           background: transparent;
+       }
 
-        .not {
-            margin: .25em 0;
+       .separator {
+           background: $text-inverse;
+           margin: 0 .5em;
+       }
 
-            &.middle {
-                margin: 0;
-            }
+       .not {
+           margin: .25em 0;
 
-            &.bottom {
-                margin: 0;
-                margin-bottom: .5em;
-            }
+           &.middle {
+               margin: 0;
+           }
 
-            .item {
+           &.bottom {
+               margin: 0;
+               margin-bottom: .5em;
+           }
 
-                &:hover {
-                    background: $bg-accent;
-                    border-radius: $rounded-medium;
-                    color: $text-base;
-                }
+           .item {
 
-                label {
-                    padding: .25em .5em;
+               &:hover {
+                   background: $bg-accent;
+                   border-radius: $rounded-medium;
+                   color: $text-base;
+               }
 
-                }
-            }
-        }
-    }
+               label {
+                   padding: .25em .5em;
+
+               }
+           }
+       }
+   }

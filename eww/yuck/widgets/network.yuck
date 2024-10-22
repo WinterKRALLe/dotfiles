@@ -27,19 +27,20 @@
     (for entry in {wifi_list.available_wifi_count}
       (box
         :space-evenly false
-        :spacing 15
+        :spacing 30
         :class {(wifi_list.currentSsid == wifi_list.ssid[entry - 1]) && (wifi_list.currentStandard == wifi_list.standards[entry - 1]) ? "accent" : ""}
         (overlay
           (label
-            :style "font-size: 1.1em"
+            :style "font-size: 1.1em; min-width: 1.5em"
             :text {
             wifi_list.signals[entry - 1] < 26 ? "󰤟" :
             wifi_list.signals[entry - 1] < 51 ? "󰤢" :
             wifi_list.signals[entry - 1] < 76 ? "󰤥" :
             "󰤨"}
-            
+            :xalign 0.5
           )
-          (label :text {wifi_list.standards[entry - 1]} :style "font-size: 0.5em; margin: 1.5em 1em 0 0")
+          (label :text {wifi_list.standards[entry - 1]} :style "font-size: 0.5em; padding: 1.25em 1em 0 0")
+          (label :text {wifi_list.secured[entry - 1] == true ? "" : ""} :style "font-size: 0.7em; padding: .7em 0 0 1.9em")
         )
         (label
           :text {wifi_list.ssid[entry - 1]}

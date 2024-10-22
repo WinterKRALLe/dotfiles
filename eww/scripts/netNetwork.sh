@@ -45,6 +45,7 @@ print() {
   standards_array=()
   signals_array=()
   count_array=()
+  secured_array=()
   count=1
 
   for entry in "${wifi_data[@]}"; do
@@ -53,6 +54,15 @@ print() {
     standards_array+=("$standard")
     signals_array+=("$signal")
     count_array+=("$count")
+
+    # Check if the network is secured (requires a password)
+    network_security=$(nmcli -t -f SSID,SECURITY dev wifi | grep "$ssid" | awk -F: '{print $2}')
+    if echo "$network_security" | grep -q "WPA\|WEP"; then
+      secured_array+=("true")
+    else
+      secured_array+=("false")
+    fi
+
     count=$((count + 1))
   done
 
@@ -84,12 +94,13 @@ print() {
       --argjson standards "$(printf '%s\n' "${standards_array[@]}" | jq -R . | jq -s .)" \
       --argjson signals "$(printf '%s\n' "${signals_array[@]}" | jq -R . | jq -s .)" \
       --argjson available_wifi_count "$(printf '%s\n' "${count_array[@]}" | jq -R . | jq -s .)" \
+      --argjson secured "$(printf '%s\n' "${secured_array[@]}" | jq -R . | jq -s .)" \
       --arg type "$type" \
       --arg wifiStatus "$wifiStatus" \
       --arg interface "$interface" \
       --arg currentSsid "$current_ssid" \
       --arg currentStandard "$current_standard" \
-      '{ssid: $ssid, standards: $standards, signals: $signals, available_wifi_count: $available_wifi_count, type: $type, wifiStatus: $wifiStatus, interface: $interface, currentSsid: $currentSsid, currentStandard: $currentStandard}'
+      '{ssid: $ssid, standards: $standards, signals: $signals, available_wifi_count: $available_wifi_count, secured: $secured, type: $type, wifiStatus: $wifiStatus, interface: $interface, currentSsid: $currentSsid, currentStandard: $currentStandard}'
   )
 
   echo "$JSON_STRING"

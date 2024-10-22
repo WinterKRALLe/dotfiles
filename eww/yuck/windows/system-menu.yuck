@@ -7,7 +7,7 @@
 
 (defwindow system-menu
   :stacking "fg"
-  :geometry (geometry :width "2px" :height "100%" :anchor "top right")
+  :geometry (geometry :height "100%" :anchor "top right")
   (revealer
     :transition "slideleft"
     :reveal open_system-menu
@@ -41,7 +41,8 @@
           network.wifiStatus == "enabled" ?
           "nmcli r wifi off" :
           "nmcli r wifi on"}
-          :action2 "nm-connection-editor &"
+          ; :action2 "nm-connection-editor &"
+          :action2 "eww open wifi_window"
           :icon {
           network.localIP == "" ? "󰯡" :
           network.type =~ "ethernet" ? "󰈀" :

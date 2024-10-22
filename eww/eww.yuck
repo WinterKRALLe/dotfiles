@@ -1,4 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
+;;  GTK ACCENT COLOR  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll    accent    :interval "1800s" `date +%H`)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        TIME        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defpoll    hour    :interval "1800s" `date +%H`)

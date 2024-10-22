@@ -19,6 +19,7 @@
       :cursor "pointer"
       :hexpand true
       (scale
+        :class "volume"
         :min 0
         :value {volume.level}
         :max 101

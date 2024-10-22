@@ -5,7 +5,7 @@
       :class "item"
       :cursor "pointer"
       :timeout 30000
-      :onclick "eww close menu && eww close menu-closer && eww update open_menu=false && ${action} &"
+      :onclick "eww close menu; eww close menu-closer; eww update open_menu=false && ${action} &"
       
       (label :xalign 0 :text label)
     )

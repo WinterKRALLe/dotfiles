@@ -9,7 +9,7 @@ $text-base: #ffffff;
 $text-muted: #8f92a6;
 $text-inverse: #979bb0;
 
-$bg-accent: #2E7CF7;
+$bg-accent: $theme_selected_bg_color;
 $bg-base: rgba(#11111c, .8);
 $bg-secondary: #2f2f49;
 $bg-base-alpha: rgba($bg-base, .4);
@@ -28,6 +28,12 @@ $rounded-medium: 8px;
     margin: 0;
     min-height: 0;
     min-width: 0;
+}
+
+.wallpaper {
+    background-image: url('/home/winter/.config/hypr/papers/sakura.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .open {

@@ -1,0 +1,6 @@
+(defwindow wallpaper
+  :geometry (geometry :width "100%" :height "100%")
+  :stacking "bg"
+  :focusable false
+  (box :class "wallpaper")
+)
