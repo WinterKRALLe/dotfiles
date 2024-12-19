@@ -1,0 +1,31 @@
+.calendar {
+    background: $bg-window;
+    padding: 1em;
+
+    color: $text-base;
+
+    calendar {
+
+        &:selected {
+            background: $bg-accent;
+            border-radius: $rounded-large;
+
+        }
+
+        &.header {
+            color: $text-muted;
+        }
+
+        &.highlight {
+            background-color: transparent;
+        }
+
+        &:indeterminate {
+            color: $text-inverse;
+        }
+
+        font-size: 1.2em;
+        padding: .3em;
+    }
+
+}

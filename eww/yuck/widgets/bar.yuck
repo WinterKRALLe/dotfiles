@@ -1,0 +1,123 @@
+(defwidget Menu []
+  (eventbox
+    :cursor "pointer"
+    :onclick "scripts/revealer.sh menu &"
+    :class "menu"
+    (box
+      :class "menu-icon"
+      (image
+        :path "./icons/Hyprland.svg"
+        :image-height 24
+      )
+    )
+  )
+)
+
+
+(defwidget Workspaces []
+  (eventbox
+    :cursor "pointer"
+    :class "workspaces"
+    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box
+      :orientation "h"
+      :spacing 15
+      (for ws in my-workspaces
+        (button :onclick "hyprctl dispatch workspace ${ws}"
+          :width 30
+          :height 30
+          (label
+            :style "font-size: 1.2em"
+            :class {
+            workspaces[ws - 1] == 1 ? "active" :
+            workspaces[ws - 1] == 2 ? "used" :
+            "unused"
+            }
+            :text {
+            workspaces[ws - 1] == 1 ? "\\uE4CB" :
+            workspaces[ws - 1] == 2 ? "\\uE4CC" :
+            "\\uE4CC"
+            }
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget Battery []
+  (box
+    :space-evenly false
+    (label :text "${battery.capacity}%  ")
+    (label :class "icon" :text {battery.state == "charging" ?
+      (battery.capacity <= 5 ? "\\uE4C5" :
+        battery.capacity <= 25 ? "\\uE4C6" :
+        battery.capacity <= 45 ? "\\uE4C7" :
+        battery.capacity <= 65 ? "\\uE4C8" :
+        battery.capacity <= 80 ? "\\uE4C9" :
+      "\\uE4CA") :
+      (battery.capacity <= 5 ? "\\uE4BF" :
+        battery.capacity <= 25 ? "\\uE4C0" :
+        battery.capacity <= 45 ? "\\uE4C1" :
+        battery.capacity <= 65 ? "\\uE4C2" :
+        battery.capacity <= 80 ? "\\uE4C3" :
+      "\\uE4C4")}
+    )
+  )
+)
+
+
+(defwidget Volume []
+  (overlay
+    :class "icon"
+    (label
+      :class "overlay"
+      :text {
+      volume.state == "true" ? "\\uE4BA" : "\\uE4BE"
+    })
+    (label
+      :text {
+      volume.state == "true" ? "\\uE4BA" :
+      volume.level < "5" ? "\\uE4BB" :
+      volume.level < "35" ? "\\uE4BC" :
+      volume.level < "70" ? "\\uE4BD" :
+      "\\uE4BE"
+    })
+  )
+)
+
+
+(defwidget Datetime []
+  (eventbox
+    :class `datetime {open_system-menu == true ? "open" : ""}`
+    :onclick "scripts/revealer.sh calendar &"
+    :cursor "pointer"
+    (label
+      :text {formattime(EWW_TIME, "%a %d %b    %H:%M")}
+    )
+  )
+)
+
+
+(defwidget Network []
+  (overlay
+    :class "icon"
+    (label
+      :class "overlay"
+      :text {
+      network.type =~ "wifi" ? "\\uE4B8" : ""
+      }
+    )
+    (label
+      :text {
+      network.localIP == "" ? "󰯡" :
+      network.type =~ "ethernet" ? "\\uE4B4" :
+      network.type =~ "wifi" && strength == "" ? "󰤭" :
+      network.type =~ "wifi" && strength < 26 ? "\\uE4B5" :
+      network.type =~ "wifi" && strength < 51 ? "\\uE4B6" :
+      network.type =~ "wifi" && strength < 76 ? "\\uE4B7" :
+      "\\uE4B8"}
+    )
+  )
+)

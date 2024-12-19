@@ -1,0 +1,7 @@
+(defwidget closer [window]
+  (eventbox
+  :onclick "scripts/newtoggle.sh ${window} &"))
+
+(defwidget revealer-closer [window]
+  (eventbox
+  :onclick "scripts/revealer.sh ${window} &"))

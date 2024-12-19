@@ -1,0 +1,7 @@
+(include "./yuck/widgets/bar.yuck")
+(include "./yuck/widgets/system-menu.yuck")
+(include "./yuck/widgets/mpris.yuck")
+(include "./yuck/widgets/menu.yuck")
+(include "./yuck/widgets/closer.yuck")
+(include "./yuck/widgets/notifications.yuck")
+(include "./yuck/widgets/network.yuck")

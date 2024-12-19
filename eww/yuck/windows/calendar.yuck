@@ -1,0 +1,19 @@
+(defwindow calendar-closer
+  :geometry (geometry :width "100%" :height "120%")
+  :stacking "fg"
+  :focusable false
+  :namespace "fromEWW"
+  (revealer-closer :window "calendar"))
+
+
+(defwindow calendar
+  :stacking "overlay"
+  :geometry (geometry
+  :anchor "top right")
+  (revealer
+    :transition "none"
+    :reveal open_calendar
+    :class "calendar"
+    (calendar)
+  )
+)

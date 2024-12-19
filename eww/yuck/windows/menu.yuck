@@ -1,0 +1,89 @@
+(defwindow menu-closer
+  :geometry (geometry :width "100%" :height "110%")
+  :stacking "fg"
+  :focusable false
+  :namespace "fromEWW"
+  (revealer-closer :window "menu"))
+
+
+(defwindow menu
+  :stacking "overlay"
+  :geometry (geometry
+    :anchor "top left"
+    :x "35%"
+  )
+  (revealer
+    :transition "slidetop"
+    :reveal open_menu
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "menu-wrapper"
+      
+      (menu_item
+        :action "wofi --show drun"
+        :label "Apps"
+      )
+      
+      (menu_separator)
+      
+      (menu_item
+        :action "hyprpicker -n -a"
+        :label "Eyedropper"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "hyprshot -m region --clipboard-only"
+        :label "Screenshot to Copy"
+      )
+      
+      (menu_item
+        :action "hyprshot -m region -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Region Screenshot"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "hyprshot -m output -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Screen Screenshot"
+      )
+      
+      (menu_item
+        :action "hyprshot -m window -o ~/Pictures/Screenshots/$(date +'%s_hyprshot.png')"
+        :label "Window Screenshot"
+      )
+      
+      (menu_separator)
+      
+      (menu_item
+        :action "systemctl suspend"
+        :label "Sleep"
+      )
+      
+      (menu_item
+        :class "middle"
+        :action "reboot"
+        :label "Restart"
+      )
+      
+      (menu_item
+        :action "poweroff"
+        :label "Shut Down"
+      )
+      (menu_separator)
+      
+      (menu_item
+        :action "hyprlock"
+        :label "Lock Screen"
+      )
+      
+      (menu_item
+        :class "bottom"
+        :action "hyprctl dispatch exit"
+        :label "Log Out ${user}"
+      )
+    )
+  )
+)

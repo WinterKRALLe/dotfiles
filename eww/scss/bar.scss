@@ -1,0 +1,40 @@
+.bar {
+    label {
+        font-family: "good times", "ubuntu nerd font";
+    }
+
+    .part {
+        padding: .25em 2em;
+        background: $bg;
+        color: #bae5ec;
+        border-radius: $rounded-medium;
+
+        &:nth-child(2) {
+            padding: .25rem 7rem;
+        }
+
+        .icon {
+            font-size: 1.25em;
+        }
+    }
+
+    .workspaces {
+        .unused {
+            color: rgba(#bae5ec, .3);
+        }
+    }
+
+    .menu-icon {
+        min-width: 2.25rem;
+        border-radius: $rounded-medium;
+        background: $bg-base;
+
+        &:hover {
+            background: #bae5ec;
+        }
+    }
+
+    .overlay {
+        color: rgba(#bae5ec, .3);
+    }
+}

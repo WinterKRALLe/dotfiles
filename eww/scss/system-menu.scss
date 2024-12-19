@@ -1,0 +1,115 @@
+.system-menu {
+    padding: .5rem 2rem 0 0;
+    min-width: 25rem;
+}
+
+.system {
+    padding: .5rem;
+    background: $bg;
+    border-radius: $rounded-large;
+
+    .muted {
+        background: $bg-base;
+        border-radius: $rounded-large;
+    }
+}
+
+// .system {
+//     padding: 1em;
+
+//     .muted {
+//         background: $bg-base;
+//         padding: 1em;
+//         border-radius: $rounded-large;
+//     }
+
+// }
+
+// .sys .prog {
+
+//     &.cpu {
+//         color: #73DACA;
+//     }
+
+//     &.ram {
+//         color: #E0AF68;
+//     }
+
+//     &.temp {
+//         color: #F7768E;
+//     }
+
+//     &.battery {
+//         color: #7AA2F7;
+//     }
+
+//     background: rgba(#bae5ec, .3);
+
+// }
+
+// .arrowbutton {
+//     background: rgba(#bae5ec, .3);
+//     border-radius: $rounded-full;
+
+//     &.wifi.active {
+//         background: #BB9AF7;
+//     }
+
+//     &.blue.active {
+//         background: #076FD1;
+//     }
+
+//     &.mic.active {
+//         background: #F7768E;
+//     }
+
+//     .eventbox {
+
+//         &.first {
+//             border-radius: 9999px 0 0 9999px;
+//         }
+
+//         &.second {
+//             border-radius: 0 9999px 9999px 0;
+//         }
+
+//         .label {
+//             padding: .75em 1em;
+//         }
+//     }
+// }
+
+// .sink {
+//     border-radius: $rounded-large;
+//     background: $bg-secondary;
+
+//     &.accent-bg {
+//         background-color: $theme_selected_bg_color;
+//     }
+
+//     label {
+//         padding: .5em 1em;
+//     }
+// }
+
+// .network-wrapper {
+//     padding: 1em;
+//     border-radius: $rounded-large;
+//     background: $bg-base;
+
+//     .scales {
+
+//         progressbar trough {
+//             background-color: $bg-secondary;
+//             border-radius: 10px;
+//             min-height: 9px;
+//             min-width: 13em;
+
+//             progress {
+//                 min-height: 9px;
+//                 border-radius: 10px;
+//                 background: $bg-accent;
+//             }
+//         }
+//     }
+// }

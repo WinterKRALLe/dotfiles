@@ -1,0 +1,17 @@
+.player-wrapper {
+    background: $bg-window;
+    padding: 0 1em;
+
+    .player-info {
+        padding: 1em 0;
+    }
+
+    .player {
+        padding: 1em 0;
+        border-top: 0.5px solid $border;
+
+        &:first-child {
+            border: none;
+        }
+    }
+}
