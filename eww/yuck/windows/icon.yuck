@@ -1,8 +1,0 @@
-(defwindow icons
-  :stacking "fg"
-  :geometry (geometry
-    :anchor "top left"
-    :x "1%"
-    :y "1%"
-  )
-)
